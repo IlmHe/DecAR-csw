@@ -15,6 +15,7 @@
 		6A4397C2292516860000D1B7 /* DecARTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4397C1292516860000D1B7 /* DecARTests.swift */; };
 		6A4397CC292516860000D1B7 /* DecARUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4397CB292516860000D1B7 /* DecARUITests.swift */; };
 		6A4397CE292516860000D1B7 /* DecARUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4397CD292516860000D1B7 /* DecARUITestsLaunchTests.swift */; };
+		6A63C7DA292541EB009BE389 /* chair_swan.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6A63C7D9292541EB009BE389 /* chair_swan.usdz */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		6A4397C7292516860000D1B7 /* DecARUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DecARUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4397CB292516860000D1B7 /* DecARUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecARUITests.swift; sourceTree = "<group>"; };
 		6A4397CD292516860000D1B7 /* DecARUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecARUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6A63C7D9292541EB009BE389 /* chair_swan.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = chair_swan.usdz; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 				6A4397AE292516810000D1B7 /* AppDelegate.swift */,
 				6A4397B0292516810000D1B7 /* ContentView.swift */,
 				6A4397B2292516810000D1B7 /* Experience.rcproject */,
+				6A63C7D629254126009BE389 /* 3dModels */,
 				6A4397B4292516860000D1B7 /* Assets.xcassets */,
 				6A4397B6292516860000D1B7 /* Preview Content */,
 			);
@@ -128,6 +131,14 @@
 				6A4397CD292516860000D1B7 /* DecARUITestsLaunchTests.swift */,
 			);
 			path = DecARUITests;
+			sourceTree = "<group>";
+		};
+		6A63C7D629254126009BE389 /* 3dModels */ = {
+			isa = PBXGroup;
+			children = (
+				6A63C7D9292541EB009BE389 /* chair_swan.usdz */,
+			);
+			path = 3dModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A63C7DA292541EB009BE389 /* chair_swan.usdz in Resources */,
 				6A4397B8292516860000D1B7 /* Preview Assets.xcassets in Resources */,
 				6A4397B5292516860000D1B7 /* Assets.xcassets in Resources */,
 			);
