@@ -18,10 +18,49 @@ struct ContentView : View {
 
 extension ARView {
     
+    //Setup AR config
+    func setupConfiguration() {
+        self.automaticallyConfigureSession = true
+        
+        let config = ARWorldTrackingConfiguration()
+        config.planeDetection = [.horizontal, .vertical]
+        config.environmentTexturing = .automatic
+        
+        if
+            ARWorldTrackingConfiguration
+                .supportsSceneReconstruction(.mesh) {
+            config.sceneReconstruction = .mesh
+        }
+        
+        self.session.run(config)
+    }
+    
     //add gesture recognizer to enable removal
     func enableObjectRemoval() {
         let longPressGestRecog = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
         self.addGestureRecognizer(longPressGestRecog)
+    }
+    
+    func enableObjectAdd() {
+        let tapGestRecog = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
+        self.addGestureRecognizer(tapGestRecog)
+    }
+    
+    @objc func handleTap(recognizer: UITapGestureRecognizer) {
+        let location = recognizer.location(in: self)
+        
+        let results = self.raycast(from: location, allowing: .estimatedPlane, alignment: .horizontal)
+        
+        if let firstResult = results.first {
+            let position = simd_make_float3(firstResult.worldTransform.columns.3)
+            
+            let model = retrieveModel()
+            
+            self.installGestures([.translation, .rotation], for: model)
+            
+            placeObject(modelEntity: model, at: position)
+        }
+        
     }
     
     
@@ -35,50 +74,44 @@ extension ARView {
             }
         }
     }
+    
+    /*
+     Load entity, generate collision shape and
+     return it
+    */
+    
+    func retrieveModel() -> ModelEntity {
+        let modelEntity = try! ModelEntity.loadModel(named: "chair_swan.usdz")
+        
+        modelEntity.generateCollisionShapes(recursive: true)
+        
+        return modelEntity
+    }
+    
+    /*
+     Place anchor at location, give it
+     a name for removal and add model to it
+    */
+    
+    func placeObject(modelEntity:ModelEntity, at location:SIMD3<Float>) {
+        let anchor = AnchorEntity(world: location)
+        
+        anchor.name = "chairAnchor"
+        
+        anchor.addChild(modelEntity)
+        
+        self.scene.anchors.append(anchor)
+    }
 }
 
 struct ARViewContainer: UIViewRepresentable {
     
     func makeUIView(context: Context) -> ARView {
-        
         let arView = ARView(frame: .zero)
         
-        let config = ARWorldTrackingConfiguration()
-        config.planeDetection = [.horizontal, .vertical]
-        config.environmentTexturing = .automatic
+        arView.setupConfiguration()
         
-        if
-            ARWorldTrackingConfiguration
-                .supportsSceneReconstruction(.mesh) {
-            config.sceneReconstruction = .mesh
-        }
-        
-        arView.session.run(config)
-        
-        /*
-         Create anchor in horizontal plane, give it
-         a name for removal
-        */
-        let anchor = AnchorEntity(plane: .horizontal)
-        
-        anchor.name = "chairAnchor"
-        
-        /*
-         Load entity, generate collision shape
-         and install tanslation, rotation gestures
-         for entity (for some reason also gives scaling as of now)
-        */
-        let modelEntity = try! ModelEntity.loadModel(named: "chair_swan.usdz")
-        
-        modelEntity.generateCollisionShapes(recursive: true)
-        
-        arView.installGestures([.translation, .rotation], for: modelEntity)
-        
-        
-        
-        anchor.addChild(modelEntity)
-        
-        arView.scene.anchors.append(anchor)
+        arView.enableObjectAdd()
         
         arView.enableObjectRemoval()
          
