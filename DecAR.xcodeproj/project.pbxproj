@@ -15,6 +15,7 @@
 		6A4397CC292516860000D1B7 /* DecARUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4397CB292516860000D1B7 /* DecARUITests.swift */; };
 		6A4397CE292516860000D1B7 /* DecARUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4397CD292516860000D1B7 /* DecARUITestsLaunchTests.swift */; };
 		6A63C7DA292541EB009BE389 /* chair_swan.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6A63C7D9292541EB009BE389 /* chair_swan.usdz */; };
+		6AA58C402928E39100304FD9 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA58C3F2928E39100304FD9 /* MenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		6A4397CB292516860000D1B7 /* DecARUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecARUITests.swift; sourceTree = "<group>"; };
 		6A4397CD292516860000D1B7 /* DecARUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecARUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		6A63C7D9292541EB009BE389 /* chair_swan.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = chair_swan.usdz; sourceTree = "<group>"; };
+		6AA58C3F2928E39100304FD9 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			children = (
 				6A4397AE292516810000D1B7 /* AppDelegate.swift */,
 				6A4397B0292516810000D1B7 /* ContentView.swift */,
+				6AA58C3F2928E39100304FD9 /* MenuView.swift */,
 				6A63C7D629254126009BE389 /* 3dModels */,
 				6A4397B4292516860000D1B7 /* Assets.xcassets */,
 				6A4397B6292516860000D1B7 /* Preview Content */,
@@ -270,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A4397B1292516810000D1B7 /* ContentView.swift in Sources */,
+				6AA58C402928E39100304FD9 /* MenuView.swift in Sources */,
 				6A4397AF292516810000D1B7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,7 +433,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DecAR/Preview Content\"";
-				DEVELOPMENT_TEAM = X9NZQ456C9;
+				DEVELOPMENT_TEAM = 52C5PE8N74;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
@@ -445,7 +449,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = a.Metropolia.DecAR;
+				PRODUCT_BUNDLE_IDENTIFIER = a.Metropolia.DecAR2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -461,7 +465,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DecAR/Preview Content\"";
-				DEVELOPMENT_TEAM = X9NZQ456C9;
+				DEVELOPMENT_TEAM = 52C5PE8N74;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
@@ -477,7 +481,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = a.Metropolia.DecAR;
+				PRODUCT_BUNDLE_IDENTIFIER = a.Metropolia.DecAR2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
