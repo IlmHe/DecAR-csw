@@ -1,5 +1,5 @@
 //
-//  MenuView.swift
+//  Menu.swift
 //  DecAR
 //
 //  Created by iosdev on 19.11.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MenuView: View {
+struct Menu: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -49,7 +49,7 @@ struct MenuView: View {
 
 struct MenuView_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView()
+        Menu()
     }
 }
 
