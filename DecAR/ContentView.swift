@@ -14,55 +14,57 @@ struct ContentView : View {
     @State var showMenu = false
     var body: some View {
         //ARViewContainer().edgesIgnoringSafeArea(.all)
-        let drag = DragGesture()
-            .onEnded{
-                if $0.translation.width < -100 {
-                    withAnimation{
-                        self.showMenu = false
-                    }
-                }
-            }
-        return NavigationView {
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    
-                    ARViewContainer(showMenu: self.$showMenu)
-                        .frame(width: geometry.size.width, height: geometry.size.height)
-                        .offset(x: self.showMenu ? geometry.size.width/2 : 0)
-                        .disabled(self.showMenu ? true : false)
-                    if self.showMenu {
-                        Menu()
-                            .frame(width: geometry.size.width/2)
-                            .transition(.move(edge: .leading))
-                    }
-                    
-                }
-                .gesture(drag)
-                .toolbar {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        Button(action: {
-                            withAnimation{
-                                self.showMenu = true
-                            }
-                        }) {
-                            Image(systemName: "line.horizontal.3")
-                        }
-                    }
-                    ToolbarItemGroup(placement: .navigationBarTrailing){
-                        Button(action: {
-                            withAnimation{
-                                self.showMenu = true
-                            }
-                        }) {
-                            Image(systemName: "gear")
-                        }
-                    }
-                }
-                //.toolbarBackground(.hidden, for: .navigationBar)
-            }
-            
-        }
-        
+        /*let drag = DragGesture()
+         .onEnded{
+         if $0.translation.width < -100 {
+         withAnimation{
+         self.showMenu = false
+         }
+         }
+         }
+         return NavigationView {
+         GeometryReader { geometry in
+         ZStack(alignment: .leading) {
+         
+         ARViewContainer(showMenu: self.$showMenu)
+         .frame(width: geometry.size.width, height: geometry.size.height)
+         .offset(x: self.showMenu ? geometry.size.width/2 : 0)
+         .disabled(self.showMenu ? true : false)
+         if self.showMenu {
+         Menu()
+         .frame(width: geometry.size.width/2)
+         .transition(.move(edge: .leading))
+         }
+         
+         }
+         .gesture(drag)
+         .toolbar {
+         ToolbarItemGroup(placement: .navigationBarLeading) {
+         Button(action: {
+         withAnimation{
+         self.showMenu = true
+         }
+         }) {
+         Image(systemName: "line.horizontal.3")
+         }
+         }
+         ToolbarItemGroup(placement: .navigationBarTrailing){
+         Button(action: {
+         withAnimation{
+         self.showMenu = true
+         }
+         }) {
+         Image(systemName: "gear")
+         }
+         }
+         }
+         //.toolbarBackground(.hidden, for: .navigationBar)
+         }
+         
+         }
+         
+         }*/
+        SettingsView()
     }
     
 }

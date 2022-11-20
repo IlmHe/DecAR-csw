@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6A1AED5D292AB19200CEC003 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1AED5C292AB19200CEC003 /* Settings.swift */; };
 		6A4397AF292516810000D1B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4397AE292516810000D1B7 /* AppDelegate.swift */; };
 		6A4397B1292516810000D1B7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4397B0292516810000D1B7 /* ContentView.swift */; };
 		6A4397B5292516860000D1B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A4397B4292516860000D1B7 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6A1AED5C292AB19200CEC003 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		6A4397AB292516810000D1B7 /* DecAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DecAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A4397AE292516810000D1B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A4397B0292516810000D1B7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -75,6 +77,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6A1AED5B292AB15B00CEC003 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6A1AED5C292AB19200CEC003 /* Settings.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		6A4397A2292516810000D1B7 = {
 			isa = PBXGroup;
 			children = (
@@ -98,6 +108,7 @@
 		6A4397AD292516810000D1B7 /* DecAR */ = {
 			isa = PBXGroup;
 			children = (
+				6A1AED5B292AB15B00CEC003 /* Views */,
 				6A4397AE292516810000D1B7 /* AppDelegate.swift */,
 				6A4397B0292516810000D1B7 /* ContentView.swift */,
 				6ADBC67829296C020031AF85 /* Models */,
@@ -282,6 +293,7 @@
 			files = (
 				6A4397B1292516810000D1B7 /* ContentView.swift in Sources */,
 				6AA58C402928E39100304FD9 /* Menu.swift in Sources */,
+				6A1AED5D292AB19200CEC003 /* Settings.swift in Sources */,
 				6A4397AF292516810000D1B7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
