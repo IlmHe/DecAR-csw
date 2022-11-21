@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Furniture" representedClassName=".Furniture" syncable="YES">
+        <attribute name="furnitureCategory" optional="YES" attributeType="String"/>
+        <attribute name="furnitureName" optional="YES" attributeType="String"/>
+        <relationship name="forClient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Listing" inverseName="clientFurniture" inverseEntity="Listing"/>
+    </entity>
+    <entity name="Listing" representedClassName=".Listing" syncable="YES">
+        <attribute name="clientAddress" optional="YES" attributeType="String"/>
+        <attribute name="clientName" optional="YES" attributeType="String"/>
+        <relationship name="clientFurniture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Furniture" inverseName="forClient" inverseEntity="Furniture"/>
+    </entity>
+</model>

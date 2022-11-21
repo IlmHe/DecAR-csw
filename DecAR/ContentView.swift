@@ -14,7 +14,7 @@ struct ContentView : View {
     @State var showMenu = false
     var body: some View {
         //ARViewContainer().edgesIgnoringSafeArea(.all)
-        /*let drag = DragGesture()
+        let drag = DragGesture()
          .onEnded{
          if $0.translation.width < -100 {
          withAnimation{
@@ -63,8 +63,8 @@ struct ContentView : View {
          
          }
          
-         }*/
-        SettingsView()
+         }
+        // SettingsView()
     }
     
 }

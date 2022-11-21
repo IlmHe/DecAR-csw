@@ -9,6 +9,18 @@ import UIKit
 import SwiftUI
 
 @main
+
+struct DecARCoreDataApp: App {
+    let persistenceController = PersistenceController.shared
+
+    var body: some Scene {
+        WindowGroup {
+            ListingsView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+        }
+    }
+}
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
@@ -18,6 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView()
+        // For testing listings view. Can be deleted later.
+        //let contentView = ListingsView()
 
         // Use a UIHostingController as window root view controller.
         let window = UIWindow(frame: UIScreen.main.bounds)
