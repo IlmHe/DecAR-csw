@@ -17,22 +17,14 @@ struct ContentView : View {
     var body: some View {
         //ARViewContainer().edgesIgnoringSafeArea(.all)
         let drag = DragGesture()
-         .onEnded{
-         if $0.translation.width < -100 {
-         withAnimation{
-         self.showMenu = false
-         }
-         }
-         }
-        
-        let furDrag = DragGesture()
-            .onEnded {
-                if $0.translation.height < -100 {
-                    withAnimation {
-                        self.showFurMenu = false
-                    }
+         .onEnded {
+             if $0.translation.width < -100 {
+                withAnimation{
+                    self.showMenu = false
                 }
-            }
+             }
+         }
+    
         
         return NavigationView {
             GeometryReader { geometry in
@@ -52,42 +44,47 @@ struct ContentView : View {
                     
                     if !self.showMenu && self.showFurMenu {
                         FurnitureMenu()
-                            //.frame(height: geometry.size.height/2)
                             .transition(.move(edge: .bottom))
                     }
                     
                 }
                 .gesture(drag)
-                .gesture(furDrag)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
-                        Button(action: {
-                            withAnimation{
-                                self.showMenu = true
+                        if !self.showFurMenu {
+                            Button(action: {
+                                withAnimation{
+                                    self.showMenu = true
+                                }
+                            }) {
+                                Image(systemName: "line.horizontal.3")
                             }
-                        }) {
-                            Image(systemName: "line.horizontal.3")
                         }
+
                     }
 
                     ToolbarItemGroup(placement: .navigationBarTrailing){
-                        Button(action: {
-                            withAnimation{
-                                self.showMenu = true
+                        if !self.showFurMenu {
+                            Button(action: {
+                                withAnimation{
+                                    self.showMenu = true
+                                }
+                            }) {
+                                Image(systemName: "gear")
                             }
-                        }) {
-                            Image(systemName: "gear")
                         }
                     }
                     
                     ToolbarItemGroup(placement: .bottomBar) {
-                        Button(action: {
-                            withAnimation{
-                                self.showFurMenu = true
+                        if !(self.showFurMenu || self.showMenu) {
+                            Button(action: {
+                                withAnimation{
+                                    self.showFurMenu = true
+                                }
+                            }) {
+                                Image(systemName: "plus.circle")
+                                    .imageScale(.large)
                             }
-                        }) {
-                            Image(systemName: "plus.circle")
-                                .imageScale(.large)
                         }
                     }
                 }

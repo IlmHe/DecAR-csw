@@ -13,7 +13,7 @@ struct FurnitureMenu: View {
             
             Spacer()
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .bottom)
         .background(Color(red: 64/255, green: 208/255, blue: 236/255))
         .listStyle(.automatic)
         .edgesIgnoringSafeArea(.all)
