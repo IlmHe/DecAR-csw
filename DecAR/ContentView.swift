@@ -33,7 +33,6 @@ struct ContentView : View {
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .offset(x: self.showMenu ? geometry.size.width/2 : 0)
                         .disabled(self.showMenu ? true : false)
-                        .disabled(self.showFurMenu ? true : false)
                         .edgesIgnoringSafeArea(.all)
 
                     if self.showMenu {
@@ -87,9 +86,8 @@ struct ContentView : View {
                             }
                         }
                     }
-                }
-                
-                //.toolbarBackground(.hidden, for: .navigationBar)
+                    
+                }//.toolbarBackground(.hidden, for: .navigationBar)
             }
             
         }
