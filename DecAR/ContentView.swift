@@ -12,6 +12,8 @@ import ARKit
 
 struct ContentView : View {
     @State var showMenu = false
+    @State var showFurMenu = false
+
     var body: some View {
         //ARViewContainer().edgesIgnoringSafeArea(.all)
         let drag = DragGesture()
@@ -22,49 +24,79 @@ struct ContentView : View {
          }
          }
          }
-         return NavigationView {
-         GeometryReader { geometry in
-         ZStack(alignment: .leading) {
-         
-         ARViewContainer(showMenu: self.$showMenu)
-         .frame(width: geometry.size.width, height: geometry.size.height)
-         .offset(x: self.showMenu ? geometry.size.width/2 : 0)
-         .disabled(self.showMenu ? true : false)
-         if self.showMenu {
-         Menu()
-         .frame(width: geometry.size.width/2)
-         .transition(.move(edge: .leading))
-         }
-         
-         }
-         .gesture(drag)
-         .toolbar {
-         ToolbarItemGroup(placement: .navigationBarLeading) {
-         Button(action: {
-         withAnimation{
-         self.showMenu = true
-         }
-         }) {
-         Image(systemName: "line.horizontal.3")
-         }
-         }
-         ToolbarItemGroup(placement: .navigationBarTrailing){
-         Button(action: {
-         withAnimation{
-         self.showMenu = true
-         }
-         }) {
-         Image(systemName: "gear")
-         }
-         }
-         }
-         //.toolbarBackground(.hidden, for: .navigationBar)
-         }
-         
-         }
-         
-         }
-        // SettingsView()
+        
+        let furDrag = DragGesture()
+            .onEnded {
+                if $0.translation.height < -100 {
+                    withAnimation {
+                        self.showFurMenu = false
+                    }
+                }
+            }
+        
+        return NavigationView {
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    ARViewContainer(showMenu: self.$showMenu, showFurMenu: self.$showFurMenu)
+                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        .offset(x: self.showMenu ? geometry.size.width/2 : 0)
+                        .disabled(self.showMenu ? true : false)
+                        .disabled(self.showFurMenu ? true : false)
+                        .edgesIgnoringSafeArea(.all)
+
+                    if self.showMenu {
+                        Menu()
+                            .frame(width: geometry.size.width/2)
+                            .transition(.move(edge: .leading))
+                    }
+                    
+                    if !self.showMenu && self.showFurMenu {
+                        FurnitureMenu()
+                            //.frame(height: geometry.size.height/2)
+                            .transition(.move(edge: .bottom))
+                    }
+                    
+                }
+                .gesture(drag)
+                .gesture(furDrag)
+                .toolbar {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        Button(action: {
+                            withAnimation{
+                                self.showMenu = true
+                            }
+                        }) {
+                            Image(systemName: "line.horizontal.3")
+                        }
+                    }
+
+                    ToolbarItemGroup(placement: .navigationBarTrailing){
+                        Button(action: {
+                            withAnimation{
+                                self.showMenu = true
+                            }
+                        }) {
+                            Image(systemName: "gear")
+                        }
+                    }
+                    
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        Button(action: {
+                            withAnimation{
+                                self.showFurMenu = true
+                            }
+                        }) {
+                            Image(systemName: "plus.circle")
+                                .imageScale(.large)
+                        }
+                    }
+                }
+                
+                //.toolbarBackground(.hidden, for: .navigationBar)
+            }
+            
+        }
+        
     }
     
 }
@@ -160,6 +192,7 @@ extension ARView {
 struct ARViewContainer: UIViewRepresentable {
     
     @Binding var showMenu: Bool
+    @Binding var showFurMenu: Bool
     
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)

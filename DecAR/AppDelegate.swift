@@ -10,6 +10,7 @@ import SwiftUI
 
 @main
 
+/*
 struct DecARCoreDataApp: App {
     let persistenceController = PersistenceController.shared
 
@@ -19,7 +20,7 @@ struct DecARCoreDataApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
-}
+}*/
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
