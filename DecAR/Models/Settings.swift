@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct Settings: View {
     @State var isOn = false
     var body: some View {
         ZStack(
@@ -23,5 +23,10 @@ struct SettingsView: View {
                     }
                 
             }
+    }
+}
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        Settings()
     }
 }

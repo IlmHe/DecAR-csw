@@ -13,6 +13,7 @@ import ARKit
 struct ContentView : View {
     @State var showMenu = false
     @State var showFurMenu = false
+    @State var showSettings = false
 
     var body: some View {
         //ARViewContainer().edgesIgnoringSafeArea(.all)
@@ -29,10 +30,12 @@ struct ContentView : View {
         return NavigationView {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
-                    ARViewContainer(showMenu: self.$showMenu, showFurMenu: self.$showFurMenu)
+                    ARViewContainer(showMenu: self.$showMenu, showFurMenu: self.$showFurMenu, showSettings: self.$showSettings)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .offset(x: self.showMenu ? geometry.size.width/2 : 0)
                         .disabled(self.showMenu ? true : false)
+                        .offset(x: self.showSettings ? geometry.size.width/2 : 0)
+                        .disabled(self.showSettings ? true : false)
                         .edgesIgnoringSafeArea(.all)
 
                     if self.showMenu {
@@ -41,9 +44,15 @@ struct ContentView : View {
                             .transition(.move(edge: .leading))
                     }
                     
-                    if !self.showMenu && self.showFurMenu {
+                    if !self.showMenu && !self.showSettings && self.showFurMenu {
                         FurnitureMenu()
                             .transition(.move(edge: .bottom))
+                    }
+                    
+                    if !self.showMenu && !self.showFurMenu && self.showSettings {
+                        Settings()
+                            .frame(height: geometry.size.height/2)
+                            .transition(.move(edge: .leading))
                     }
                     
                 }
@@ -66,12 +75,13 @@ struct ContentView : View {
                         if !self.showFurMenu {
                             Button(action: {
                                 withAnimation{
-                                    self.showMenu = true
+                                    self.showSettings = true
                                 }
                             }) {
                                 Image(systemName: "gear")
                             }
                         }
+                        
                     }
                     
                     ToolbarItemGroup(placement: .bottomBar) {
@@ -188,6 +198,7 @@ struct ARViewContainer: UIViewRepresentable {
     
     @Binding var showMenu: Bool
     @Binding var showFurMenu: Bool
+    @Binding var showSettings: Bool
     
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
