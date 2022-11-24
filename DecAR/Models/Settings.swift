@@ -13,7 +13,7 @@ struct Settings: View {
         ZStack(
             alignment: .top) {
                 VStack(
-                    alignment: .leading
+                    alignment: .trailing
                         ) {
                             Toggle("English 🇬🇧", isOn: $isOn).padding(80)
                         Spacer()
@@ -21,7 +21,11 @@ struct Settings: View {
                             Text("testing")
                         }
                     }
-                
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .background(Color(red: 64/255, green: 208/255, blue: 236/255))
+                        .listStyle(.sidebar)
+                        .edgesIgnoringSafeArea(.all)
             }
     }
 }

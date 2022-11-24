@@ -51,8 +51,8 @@ struct ContentView : View {
                     
                     if !self.showMenu && !self.showFurMenu && self.showSettings {
                         Settings()
-                            .frame(height: geometry.size.height/2)
-                            .transition(.move(edge: .leading))
+                            .frame(height: geometry.size.width/2)
+                            .transition(.move(edge: .trailing))
                     }
                     
                 }
@@ -61,8 +61,14 @@ struct ContentView : View {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
                         if !self.showFurMenu {
                             Button(action: {
-                                withAnimation{
-                                    self.showMenu = true
+                                if !self.showMenu {
+                                    withAnimation{
+                                        self.showMenu = true
+                                    }
+                                } else {
+                                    withAnimation{
+                                        self.showMenu = false
+                                    }
                                 }
                             }) {
                                 Image(systemName: "line.horizontal.3")
@@ -74,8 +80,14 @@ struct ContentView : View {
                     ToolbarItemGroup(placement: .navigationBarTrailing){
                         if !self.showFurMenu {
                             Button(action: {
-                                withAnimation{
-                                    self.showSettings = true
+                                if !self.showSettings {
+                                    withAnimation{
+                                        self.showSettings = true
+                                    }
+                                } else {
+                                    withAnimation{
+                                        self.showSettings = false
+                                    }
                                 }
                             }) {
                                 Image(systemName: "gear")

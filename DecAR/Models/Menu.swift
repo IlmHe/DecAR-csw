@@ -11,30 +11,47 @@ struct Menu: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "gear")
-                    .foregroundColor(.gray)
-                    .imageScale(.large)
-                Text("Settings")
-                    .foregroundColor(.gray)
-                    .font(.headline)
+                NavigationLink(destination: FurnitureMenu()) {
+                    Image(systemName: "map")
+                        .foregroundColor(.gray)
+                        .imageScale(.large)
+                    Text("Map")
+                            .foregroundColor(.gray)
+                            .font(.headline)
+                }
             }
             .padding(.top, 100)
             HStack {
-                Image(systemName: "gear")
-                    .foregroundColor(.gray)
-                    .imageScale(.large)
-                Text("Settings")
-                    .foregroundColor(.gray)
-                    .font(.headline)
+                NavigationLink(destination: Settings()) {
+                    Image(systemName: "gear")
+                        .foregroundColor(.gray)
+                        .imageScale(.large)
+                    Text("Settings")
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                }
             }
             .padding(.top, 30)
             HStack {
-                Image(systemName: "gear")
-                    .foregroundColor(.gray)
-                    .imageScale(.large)
-                Text("Settings")
-                    .foregroundColor(.gray)
-                    .font(.headline)
+                NavigationLink(destination: FurnitureMenu()) {
+                    Image(systemName: "map")
+                        .foregroundColor(.gray)
+                        .imageScale(.large)
+                    Text("Furniture Menu")
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                }
+            }
+            .padding(.top, 30)
+            HStack {
+                NavigationLink(destination: FurnitureMenu()) {
+                    Image(systemName: "map")
+                        .foregroundColor(.gray)
+                        .imageScale(.large)
+                    Text("Listings")
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                }
             }
             .padding(.top, 30)
             Spacer()
