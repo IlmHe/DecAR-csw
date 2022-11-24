@@ -15,6 +15,9 @@ struct ContentView : View {
     @State var showFurMenu = false
     @State var showSettings = false
 
+    //Coredata
+    @Environment(\.managedObjectContext) private var viewContext
+    
     var body: some View {
         //ARViewContainer().edgesIgnoringSafeArea(.all)
         let drag = DragGesture()
@@ -212,6 +215,7 @@ struct ARViewContainer: UIViewRepresentable {
     @Binding var showFurMenu: Bool
     @Binding var showSettings: Bool
     
+    
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
         
@@ -224,6 +228,7 @@ struct ARViewContainer: UIViewRepresentable {
         return arView
 
     }
+     
     
     func updateUIView(_ uiView: ARView, context: Context) {
     }

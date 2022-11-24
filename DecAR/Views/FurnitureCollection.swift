@@ -1,35 +1,34 @@
 //
-//  Listings.swift
+//  FurnitureCollection.swift
 //  DecAR
 //
-//  Created by iosdev on 20.11.2022.
+//  Created by iosdev on 23.11.2022.
 //
 
 import Foundation
 import SwiftUI
 import CoreData
 
-struct ListingsView: View {
+struct FurnitureCollectionView: View {
     @State private var presentAlert = false
-    @State private var clientName: String = ""
-    @State private var clientAddress: String = ""
+    @State private var furnitureName: String = ""
+    //@State private var furnitureCategory: String = ""
     
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Listing.clientName, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Furniture.furnitureName , ascending: true)],
         animation: .default)
-    private var listings: FetchedResults<Listing>
+    private var furnitures: FetchedResults<Furniture>
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(listings) { listing in
+                ForEach(furnitures) { furniture in
                     NavigationLink {
-                        Text("Client name: \(listing.clientName!)")
-                        Text("Client address: \(listing.clientAddress!)")
+                        Text("Furniture name: \(furniture.furnitureName!)")
                     } label: {
-                        Text(listing.clientName!)
+                        Text(furniture.furnitureName!)
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -42,15 +41,12 @@ struct ListingsView: View {
                         Button("Add") {
                         presentAlert = true
                     }
-                    .alert("Add listing", isPresented: $presentAlert, actions: {
-                        TextField("Client name", text: $clientName)
-
-                        TextField("Client address", text: $clientAddress)
+                    .alert("Add furniture", isPresented: $presentAlert, actions: {
+                        TextField("Furniture name", text: $furnitureName)
 
                         Button("Add", action: {
-                            let newListing = Listing(context: viewContext)
-                            newListing.clientName = clientName
-                            newListing.clientAddress = clientAddress
+                            let newFurniture = Furniture(context: viewContext)
+                            newFurniture.furnitureName = furnitureName
                             do {
                                 try viewContext.save()
                             } catch {
@@ -60,7 +56,7 @@ struct ListingsView: View {
                         })
                         Button("Cancel", role: .cancel, action: {})
                     }, message: {
-                        Text("Enter listing details.")
+                        Text("Enter furniture details.")
                     })
                     }
             }
@@ -73,7 +69,7 @@ struct ListingsView: View {
     
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { listings[$0] }.forEach(viewContext.delete)
+            offsets.map { furnitures[$0] }.forEach(viewContext.delete)
             do {
                 try viewContext.save()
             } catch {
@@ -84,16 +80,8 @@ struct ListingsView: View {
     }
 }
 
-struct ListingsView_Previews: PreviewProvider {
+struct FurnitureCollectionView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
-
-/*
-struct Previews_Listings_Previews: PreviewProvider {
-    static var previews: some View {
-        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
-    }
-}
-*/
