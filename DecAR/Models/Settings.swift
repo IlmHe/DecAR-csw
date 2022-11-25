@@ -15,18 +15,19 @@ struct Settings: View {
                 VStack(
                     alignment: .trailing
                         ) {
-                            Toggle("English 🇬🇧", isOn: $isOn).padding(80)
-                        Spacer()
+                            Toggle("English 🇬🇧", isOn: $isOn)//.padding(80)
+                        //Spacer()
                         if isOn {
                             Text("testing")
                         }
                     }
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .background(Color(red: 64/255, green: 208/255, blue: 236/255))
-                        .listStyle(.sidebar)
-                        .edgesIgnoringSafeArea(.all)
+                        
             }
+            .padding()
+            .background(Color(red: 64/255, green: 208/255, blue: 236/255).opacity(0.1))
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .listStyle(.sidebar)
+            .edgesIgnoringSafeArea(.all)
     }
 }
 struct SettingsView_Previews: PreviewProvider {

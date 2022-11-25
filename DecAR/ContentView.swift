@@ -28,19 +28,19 @@ struct ContentView : View {
                 }
              }
          }
-    
         
         return NavigationView {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
+                    //Color.purple
                     ARViewContainer(showMenu: self.$showMenu, showFurMenu: self.$showFurMenu, showSettings: self.$showSettings)
                         .frame(width: geometry.size.width, height: geometry.size.height)
-                        .offset(x: self.showMenu ? geometry.size.width/2 : 0)
+                        //.offset(x: self.showMenu ? geometry.size.width/2 : 0)
                         .disabled(self.showMenu ? true : false)
-                        .offset(x: self.showSettings ? geometry.size.width/2 : 0)
+                        //.offset(x: self.showSettings ? -geometry.size.width/2 : 0)
                         .disabled(self.showSettings ? true : false)
                         .edgesIgnoringSafeArea(.all)
-
+                        
                     if self.showMenu {
                         Menu()
                             .frame(width: geometry.size.width/2)
@@ -54,7 +54,8 @@ struct ContentView : View {
                     
                     if !self.showMenu && !self.showFurMenu && self.showSettings {
                         Settings()
-                            .frame(height: geometry.size.width/2)
+                            .offset(x: geometry.size.width/2)
+                            .frame(width: geometry.size.width/2)
                             .transition(.move(edge: .trailing))
                     }
                     
