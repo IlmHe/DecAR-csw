@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  DecAR
+
+  Created by iosdev on 25.11.2022.
+  
+*/
+"menuMapText" = "Kartta";
+"menuSettingsText" = "Asetukset";
+"menuFurnitureText" = "Huonekalut";
+"menuListingsText" = "Listaukset";

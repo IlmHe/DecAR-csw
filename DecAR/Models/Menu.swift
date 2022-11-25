@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+let menuMapText:LocalizedStringKey = "menuMapText"
+let menuSettingsText:LocalizedStringKey = "menuSettingsText"
+let menuFurnitureText:LocalizedStringKey = "menuFurnitureText"
+let menuListingsText:LocalizedStringKey = "menuListingsText"
+
+
 struct Menu: View {
     var body: some View {
         VStack(alignment: .leading) {
@@ -15,7 +21,7 @@ struct Menu: View {
                     Image(systemName: "map")
                         .foregroundColor(.gray)
                         .imageScale(.large)
-                    Text("Map")
+                    Text(menuMapText)
                             .foregroundColor(.gray)
                             .font(.headline)
                 }
@@ -26,7 +32,7 @@ struct Menu: View {
                     Image(systemName: "gear")
                         .foregroundColor(.gray)
                         .imageScale(.large)
-                    Text("Settings")
+                    Text(menuSettingsText)
                         .foregroundColor(.gray)
                         .font(.headline)
                 }
@@ -37,7 +43,7 @@ struct Menu: View {
                     Image(systemName: "map")
                         .foregroundColor(.gray)
                         .imageScale(.large)
-                    Text("Furniture Menu")
+                    Text(menuFurnitureText)
                         .foregroundColor(.gray)
                         .font(.headline)
                 }
@@ -48,7 +54,7 @@ struct Menu: View {
                     Image(systemName: "map")
                         .foregroundColor(.gray)
                         .imageScale(.large)
-                    Text("Listings")
+                    Text(menuListingsText)
                         .foregroundColor(.gray)
                         .font(.headline)
                 }

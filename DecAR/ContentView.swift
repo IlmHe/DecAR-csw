@@ -220,11 +220,11 @@ struct ARViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
         
-        arView.setupConfiguration()
+        //arView.setupConfiguration()
         
-        arView.enableObjectAdd()
+        //arView.enableObjectAdd()
         
-        arView.enableObjectRemoval()
+        //arView.enableObjectRemoval()
          
         return arView
 
