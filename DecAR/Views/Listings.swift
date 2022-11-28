@@ -9,6 +9,16 @@ import Foundation
 import SwiftUI
 import CoreData
 
+let listingsClientName = NSLocalizedString("listingsClientName", comment: "listingsClientName")
+let listingsClientAddress = NSLocalizedString("listingsClientAddress", comment: "listingsClientAddress")
+let listingsAddBtn = NSLocalizedString("listingsAddBtn", comment: "listingsAddBtn")
+let listingsAlertAddListing = NSLocalizedString("listingsAlertAddListing", comment: "listingsAlertAddListing")
+let listingsClientName2 = NSLocalizedString("listingsClientName2", comment: "listingsClientName2")
+let listingsClientAddress2 = NSLocalizedString("listingsClientAddress2", comment: "listingsClientAddress2")
+let listingsBtnCancel = NSLocalizedString("listingsBtnCancel", comment: "listingsBtnCancel")
+let listingsDetails = NSLocalizedString("listingsDetails", comment: "listingsDetails")
+let listingsSelectItem = NSLocalizedString("listingsSelectItem", comment: "listingsSelectItem")
+
 struct ListingsView: View {
     @State private var presentAlert = false
     @State private var clientName: String = ""
@@ -26,8 +36,8 @@ struct ListingsView: View {
             List {
                 ForEach(listings) { listing in
                     NavigationLink {
-                        Text("Client name: \(listing.clientName!)")
-                        Text("Client address: \(listing.clientAddress!)")
+                        Text("\(listingsClientName) \(listing.clientName!)")
+                        Text("\(listingsClientAddress) \(listing.clientAddress!)")
                     } label: {
                         Text(listing.clientName!)
                     }
@@ -39,15 +49,14 @@ struct ListingsView: View {
                     EditButton()
                 }
                 ToolbarItem {
-                        Button("Add") {
+                        Button(listingsAddBtn) {
                         presentAlert = true
                     }
-                    .alert("Add listing", isPresented: $presentAlert, actions: {
-                        TextField("Client name", text: $clientName)
+                    .alert(listingsAlertAddListing, isPresented: $presentAlert, actions: {
+                        TextField(listingsClientName2, text: $clientName)
+                        TextField(listingsClientAddress2, text: $clientAddress)
 
-                        TextField("Client address", text: $clientAddress)
-
-                        Button("Add", action: {
+                        Button(listingsAddBtn, action: {
                             let newListing = Listing(context: viewContext)
                             newListing.clientName = clientName
                             newListing.clientAddress = clientAddress
@@ -58,13 +67,13 @@ struct ListingsView: View {
                                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                             }
                         })
-                        Button("Cancel", role: .cancel, action: {})
+                        Button(listingsBtnCancel, role: .cancel, action: {})
                     }, message: {
-                        Text("Enter listing details.")
+                        Text(listingsDetails)
                     })
                     }
             }
-            Text("Select an item")
+            Text(listingsSelectItem)
         }
     }
 

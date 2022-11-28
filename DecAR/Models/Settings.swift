@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let settingsLang:LocalizedStringKey = "settingsLang"
+
 struct Settings: View {
     @State var isOn = false
     var body: some View {
@@ -15,7 +17,7 @@ struct Settings: View {
                 VStack(
                     alignment: .trailing
                         ) {
-                            Toggle("English 🇬🇧", isOn: $isOn)//.padding(80)
+                            Toggle(settingsLang, isOn: $isOn)//.padding(80)
                         //Spacer()
                         if isOn {
                             Text("testing")

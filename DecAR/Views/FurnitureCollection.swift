@@ -9,6 +9,18 @@ import Foundation
 import SwiftUI
 import CoreData
 
+let furnitureName = NSLocalizedString("furnitureName", comment: "furnitureName")
+let furnitureAlertAddFurniture = NSLocalizedString("furnitureAlertAddFurniture", comment: "furnitureAlertAddFurniture")
+let furnitureFurnitureName = NSLocalizedString("furnitureFurnitureName", comment: "furnitureFurnitureName")
+let furnitureEnterFurnitureDetails = NSLocalizedString("furnitureEnterFurnitureDetails", comment: "furnitureEnterFurnitureDetails")
+let furnitureSelectItem = NSLocalizedString("furnitureSelectItem", comment: "furnitureSelectItem")
+let furnitureAddBtn = NSLocalizedString("listingsAddBtn", comment: "listingsAddBtn")
+let furnitureCancelBtn = NSLocalizedString("listingsBtnCancel", comment: "listingsAddBtn")
+
+
+
+
+
 struct FurnitureCollectionView: View {
     @State private var presentAlert = false
     @State private var furnitureName: String = ""
@@ -26,7 +38,7 @@ struct FurnitureCollectionView: View {
             List {
                 ForEach(furnitures) { furniture in
                     NavigationLink {
-                        Text("Furniture name: \(furniture.furnitureName!)")
+                        Text("\(furnitureName) \(furniture.furnitureName!)")
                     } label: {
                         Text(furniture.furnitureName!)
                     }
@@ -38,13 +50,13 @@ struct FurnitureCollectionView: View {
                     EditButton()
                 }
                 ToolbarItem {
-                        Button("Add") {
+                        Button(furnitureAddBtn) {
                         presentAlert = true
                     }
-                    .alert("Add furniture", isPresented: $presentAlert, actions: {
-                        TextField("Furniture name", text: $furnitureName)
+                    .alert(furnitureAlertAddFurniture, isPresented: $presentAlert, actions: {
+                        TextField(furnitureFurnitureName, text: $furnitureName)
 
-                        Button("Add", action: {
+                        Button(furnitureAddBtn, action: {
                             let newFurniture = Furniture(context: viewContext)
                             newFurniture.furnitureName = furnitureName
                             do {
@@ -54,13 +66,13 @@ struct FurnitureCollectionView: View {
                                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                             }
                         })
-                        Button("Cancel", role: .cancel, action: {})
+                        Button(furnitureCancelBtn, role: .cancel, action: {})
                     }, message: {
-                        Text("Enter furniture details.")
+                        Text(furnitureEnterFurnitureDetails)
                     })
                     }
             }
-            Text("Select an item")
+            Text(furnitureSelectItem)
         }
     }
 
