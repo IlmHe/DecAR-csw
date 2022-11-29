@@ -28,6 +28,8 @@
 		6A63C7DA292541EB009BE389 /* chair_swan.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6A63C7D9292541EB009BE389 /* chair_swan.usdz */; };
 		6AA58C402928E39100304FD9 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA58C3F2928E39100304FD9 /* Menu.swift */; };
 		6AA58C42292E530B00304FD9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AA58C41292E530B00304FD9 /* Settings.swift */; };
+		6AA58C452936186E00304FD9 /* couch.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AA58C432936186D00304FD9 /* couch.usdz */; };
+		6AA58C462936186E00304FD9 /* Stool_6.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AA58C442936186D00304FD9 /* Stool_6.usdz */; };
 		6AE38A79292CC2A900F96075 /* FurnitureMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE38A78292CC2A900F96075 /* FurnitureMenu.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +76,8 @@
 		6A63C7D9292541EB009BE389 /* chair_swan.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = chair_swan.usdz; sourceTree = "<group>"; };
 		6AA58C3F2928E39100304FD9 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		6AA58C41292E530B00304FD9 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		6AA58C432936186D00304FD9 /* couch.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = couch.usdz; sourceTree = "<group>"; };
+		6AA58C442936186D00304FD9 /* Stool_6.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Stool_6.usdz; sourceTree = "<group>"; };
 		6AE38A78292CC2A900F96075 /* FurnitureMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FurnitureMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,6 +194,8 @@
 		6A63C7D629254126009BE389 /* 3dModels */ = {
 			isa = PBXGroup;
 			children = (
+				6AA58C432936186D00304FD9 /* couch.usdz */,
+				6AA58C442936186D00304FD9 /* Stool_6.usdz */,
 				6A63C7D9292541EB009BE389 /* chair_swan.usdz */,
 			);
 			path = 3dModels;
@@ -312,8 +318,10 @@
 			files = (
 				6A63C7DA292541EB009BE389 /* chair_swan.usdz in Resources */,
 				6A1CD86B29314C300084B6DD /* Localizable.strings in Resources */,
+				6AA58C462936186E00304FD9 /* Stool_6.usdz in Resources */,
 				6A4397B8292516860000D1B7 /* Preview Assets.xcassets in Resources */,
 				6A4397B5292516860000D1B7 /* Assets.xcassets in Resources */,
+				6AA58C452936186E00304FD9 /* couch.usdz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

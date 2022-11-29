@@ -187,7 +187,7 @@ extension ARView {
     */
     
     func retrieveModel() -> ModelEntity {
-        let modelEntity = try! ModelEntity.loadModel(named: "chair_swan.usdz")
+        let modelEntity = try! ModelEntity.loadModel(named: "Stool_6.usdz")
         
         modelEntity.generateCollisionShapes(recursive: true)
         
@@ -220,11 +220,11 @@ struct ARViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
         
-        //arView.setupConfiguration()
+        arView.setupConfiguration()
         
-        //arView.enableObjectAdd()
+        arView.enableObjectAdd()
         
-        //arView.enableObjectRemoval()
+        arView.enableObjectRemoval()
          
         return arView
 
