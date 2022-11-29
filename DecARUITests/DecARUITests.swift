@@ -22,12 +22,58 @@ final class DecARUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
+    func testSettings() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        let settings = app.navigationBars["_TtGC7SwiftUI19UIHosting"].buttons["Settings"]
+            
+        XCTAssertTrue(settings.exists)
+        settings.tap()
+        
+        let swipedMenu = app.windows.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .other).element
+        
+        XCTAssertTrue(swipedMenu.exists)
+        
+        swipedMenu.swipeLeft()
+                                         
+    }
+    
+    func testListings() throws {
+        // UI tests must launch the application that they test.
+        let app = XCUIApplication()
+        app.launch()
+        
+        let addButton = XCUIApplication().navigationBars["_TtGC7SwiftUI19UIHosting"].buttons["Add"]
+        
+        XCTAssertTrue(addButton.exists)
+        addButton.tap()
+        
+        let cancel = XCUIApplication().alerts["Add listing"].scrollViews.otherElements.buttons["Cancel"]
+        XCTAssertTrue(cancel.exists)
+        cancel.tap()
+        
+        addButton.tap()
+        let addAlert = XCUIApplication().alerts["Add listing"].scrollViews.otherElements.buttons["Add"]
+        XCTAssertTrue(addAlert.exists)
+        addAlert.tap()
+        
+        let editBtn = app.navigationBars["_TtGC7SwiftUI19UIHosting"].buttons["Edit"]
+        XCTAssertTrue(editBtn.exists)
+        editBtn.tap()
+        
+        let tablesQuery = app.tables
+        XCTAssertTrue(tablesQuery.element.exists)
+        
+        let delBtn1 = tablesQuery.children(matching: .cell).element(boundBy: 0).buttons["Delete "]
+        XCTAssertTrue(delBtn1.exists)
+        delBtn1.tap()
+        
+        let delBtn2 = tablesQuery/*@START_MENU_TOKEN@*/.buttons["Delete"]/*[[".cells.buttons[\"Delete\"]",".buttons[\"Delete\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        XCTAssertTrue(delBtn2.exists)
+        delBtn2.tap()
+        
     }
 
     func testLaunchPerformance() throws {
