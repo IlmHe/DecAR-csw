@@ -173,8 +173,30 @@ extension ARView {
     }
     
     @objc func loadExperience(recognizer: UILongPressGestureRecognizer) {
+        self.scene.anchors.removeAll()
         
         let worldMap = try? loadWorldMap(from: self.mapSaveURL)
+        
+        
+        for anchor in worldMap?.anchors ?? [] {
+            
+            if anchor.name == "asd" {
+                print(anchor)
+
+                let anchorEntity = AnchorEntity(world: anchor.transform)
+
+                let model = retrieveModel()
+
+                anchorEntity.addChild(model)
+                self.scene.addAnchor(anchorEntity)
+                
+                self.installGestures([.translation, .rotation], for: model)
+                
+                let position = simd_make_float3(anchor.transform.columns.3)
+                
+                placeObject(modelEntity: model, at: position)
+            }
+        }
                 
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.horizontal]
@@ -216,6 +238,10 @@ extension ARView {
             
             let model = retrieveModel()
             
+            let arAnchor = ARAnchor(name: "asd", transform: firstResult.worldTransform)
+            
+            self.session.add(anchor: arAnchor)
+                        
             self.installGestures([.translation, .rotation], for: model)
             
             placeObject(modelEntity: model, at: position)
@@ -234,7 +260,7 @@ extension ARView {
                 print("can't get current worldmap")
                 return
             }
-                
+                            
             do {
                 let data = try NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
                 try data.write(to: self.mapSaveURL, options: [.atomic])
@@ -278,10 +304,12 @@ extension ARView {
      a name for removal and add model to it
     */
     
-    func placeObject(modelEntity:ModelEntity, at location:SIMD3<Float>) {
+    func placeObject(modelEntity:ModelEntity, at location:SIMD3<Float> /*, worldTrans:simd_float4x4*/) {
         let anchor = AnchorEntity(world: location)
+        let secondAnchor = AnchorEntity(world: location)
         
         anchor.name = "chairAnchor"
+        secondAnchor.name = "asd"
         
         anchor.addChild(modelEntity)
         
