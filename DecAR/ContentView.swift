@@ -188,9 +188,7 @@ extension ARView {
                 .supportsSceneReconstruction(.mesh) {
             config.sceneReconstruction = .mesh
         }
-        
-        self.session = ARSession()
-        
+                
         self.debugOptions = [.showFeaturePoints]
         self.session.run(config, options: [.resetTracking, .removeExistingAnchors])
     }
