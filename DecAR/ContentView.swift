@@ -9,6 +9,7 @@
 import SwiftUI
 import RealityKit
 import ARKit
+import SceneKit
 
 struct ContentView : View {
     @State var showMenu = false
@@ -40,7 +41,7 @@ struct ContentView : View {
                         //.offset(x: self.showSettings ? -geometry.size.width/2 : 0)
                         .disabled(self.showSettings ? true : false)
                         .edgesIgnoringSafeArea(.all)
-                        
+                    
                     if self.showMenu {
                         Menu()
                             .frame(width: geometry.size.width/2)
@@ -124,14 +125,27 @@ struct ContentView : View {
 
 extension ARView {
     
+    var mapSaveURL: URL {
+        do {
+            return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("map.arexperience")
+        } catch {
+            fatalError("Can't get file save url  \(error.localizedDescription)")
+        }
+    }
+    
+    var mapDataFromFile: Data? {
+        return try? Data(contentsOf: mapSaveURL)
+    }
+    
     //Setup AR config
     func setupConfiguration() {
+                        
         self.automaticallyConfigureSession = true
         
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.horizontal, .vertical]
         config.environmentTexturing = .automatic
-        
+                
         if
             ARWorldTrackingConfiguration
                 .supportsSceneReconstruction(.mesh) {
@@ -141,9 +155,52 @@ extension ARView {
         self.session.run(config)
     }
     
+    func enableWorldLoad() {
+        let longPressGestRecog = UILongPressGestureRecognizer(target: self, action: #selector(loadExperience(recognizer:)))
+        
+        longPressGestRecog.numberOfTouchesRequired = 2
+        longPressGestRecog.allowableMovement = 50
+        longPressGestRecog.numberOfTapsRequired = 0
+        longPressGestRecog.minimumPressDuration = 0.4
+
+        self.addGestureRecognizer(longPressGestRecog)
+    }
+    
+    func loadWorldMap(from url: URL) throws -> ARWorldMap {
+        let mapData = try Data(contentsOf: url)
+        guard let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: mapData)
+            else { throw ARError(.invalidWorldMap) }
+        return worldMap
+    }
+    
+    @objc func loadExperience(recognizer: UILongPressGestureRecognizer) {
+        
+        let worldMap = try? loadWorldMap(from: self.mapSaveURL)
+                
+        let config = ARWorldTrackingConfiguration()
+        config.planeDetection = [.horizontal]
+        
+        config.initialWorldMap = worldMap
+        
+        
+        if
+            ARWorldTrackingConfiguration
+                .supportsSceneReconstruction(.mesh) {
+            config.sceneReconstruction = .mesh
+        }
+        
+        self.session = ARSession()
+        
+        self.debugOptions = [.showFeaturePoints]
+        self.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+    }
+    
     //add gesture recognizer to enable removal
     func enableObjectRemoval() {
         let longPressGestRecog = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(recognizer:)))
+        
+        longPressGestRecog.allowableMovement = 50
+        
         self.addGestureRecognizer(longPressGestRecog)
     }
     
@@ -166,7 +223,32 @@ extension ARView {
             
             placeObject(modelEntity: model, at: position)
         }
+    }
+    
+    func enableWorldPersistance() {
+        let rotationGestRecog = UIRotationGestureRecognizer(target: self, action: #selector(saveWorldMap(recognizer:)))
+        self.addGestureRecognizer(rotationGestRecog)
+    }
         
+    @objc func saveWorldMap(recognizer: UIRotationGestureRecognizer) {
+        self.session.getCurrentWorldMap { worldMap, error in
+            guard let map = worldMap
+            else {
+                print("can't get current worldmap")
+                return
+            }
+                
+            do {
+                let data = try NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                try data.write(to: self.mapSaveURL, options: [.atomic])
+                DispatchQueue.main.async {
+                        print("map saved to directory")
+                }
+            } catch {
+                fatalError("Can't save map: \(error.localizedDescription)")
+            }
+                
+        }
     }
     
     
@@ -225,7 +307,11 @@ struct ARViewContainer: UIViewRepresentable {
         arView.enableObjectAdd()
         
         arView.enableObjectRemoval()
-         
+      
+        arView.enableWorldPersistance()
+        
+        arView.enableWorldLoad()
+        
         return arView
 
     }
