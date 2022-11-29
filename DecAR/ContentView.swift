@@ -20,7 +20,6 @@ struct ContentView : View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
-        //ARViewContainer().edgesIgnoringSafeArea(.all)
         let drag = DragGesture()
          .onEnded {
              if $0.translation.width < -100 {
