@@ -292,7 +292,7 @@ extension ARView {
     */
     
     func retrieveModel() -> ModelEntity {
-        let modelEntity = try! ModelEntity.loadModel(named: "Stool_6.usdz")
+        let modelEntity = try! ModelEntity.loadModel(named: "wooden_bed.usdz")
         
         modelEntity.generateCollisionShapes(recursive: true)
         
