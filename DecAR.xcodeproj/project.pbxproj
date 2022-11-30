@@ -37,11 +37,9 @@
 		6AB202B82937CA08005A3954 /* bunk_bed.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202B72937CA08005A3954 /* bunk_bed.usdz */; };
 		6AB202BA2937CC0A005A3954 /* bed.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202B92937CC0A005A3954 /* bed.usdz */; };
 		6AB202BC2937CD2B005A3954 /* wooden_bed.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202BB2937CD2B005A3954 /* wooden_bed.usdz */; };
-		6AB202BE2937CD3D005A3954 /* bunk_bed_black.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202BD2937CD3D005A3954 /* bunk_bed_black.usdz */; };
 		6AB202C02937CD56005A3954 /* brownleather_couch.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202BF2937CD56005A3954 /* brownleather_couch.usdz */; };
 		6AB202C22937CD68005A3954 /* divan_sofa.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202C12937CD67005A3954 /* divan_sofa.usdz */; };
 		6AB202C42937CD7E005A3954 /* tv_and_stand.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202C32937CD7E005A3954 /* tv_and_stand.usdz */; };
-		6AB202C62937CD8F005A3954 /* blue_office_chair.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202C52937CD8F005A3954 /* blue_office_chair.usdz */; };
 		6AB202C82937CD9F005A3954 /* piano_black.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202C72937CD9F005A3954 /* piano_black.usdz */; };
 		6AB202CA2937CDB7005A3954 /* wooden_bookshelf.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202C92937CDB7005A3954 /* wooden_bookshelf.usdz */; };
 		6AB202CC2937CDC4005A3954 /* wooden_table.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 6AB202CB2937CDC4005A3954 /* wooden_table.usdz */; };
@@ -136,11 +134,9 @@
 		6AB202B72937CA08005A3954 /* bunk_bed.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = bunk_bed.usdz; sourceTree = "<group>"; };
 		6AB202B92937CC0A005A3954 /* bed.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = bed.usdz; sourceTree = "<group>"; };
 		6AB202BB2937CD2B005A3954 /* wooden_bed.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wooden_bed.usdz; sourceTree = "<group>"; };
-		6AB202BD2937CD3D005A3954 /* bunk_bed_black.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = bunk_bed_black.usdz; path = ../../../../../Downloads/bunk_bed_black.usdz; sourceTree = "<group>"; };
 		6AB202BF2937CD56005A3954 /* brownleather_couch.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = brownleather_couch.usdz; sourceTree = "<group>"; };
 		6AB202C12937CD67005A3954 /* divan_sofa.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = divan_sofa.usdz; sourceTree = "<group>"; };
 		6AB202C32937CD7E005A3954 /* tv_and_stand.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = tv_and_stand.usdz; sourceTree = "<group>"; };
-		6AB202C52937CD8F005A3954 /* blue_office_chair.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = blue_office_chair.usdz; path = ../../../../../Downloads/blue_office_chair.usdz; sourceTree = "<group>"; };
 		6AB202C72937CD9F005A3954 /* piano_black.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = piano_black.usdz; sourceTree = "<group>"; };
 		6AB202C92937CDB7005A3954 /* wooden_bookshelf.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wooden_bookshelf.usdz; sourceTree = "<group>"; };
 		6AB202CB2937CDC4005A3954 /* wooden_table.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wooden_table.usdz; sourceTree = "<group>"; };
@@ -335,11 +331,9 @@
 				6AB202CB2937CDC4005A3954 /* wooden_table.usdz */,
 				6AB202C92937CDB7005A3954 /* wooden_bookshelf.usdz */,
 				6AB202C72937CD9F005A3954 /* piano_black.usdz */,
-				6AB202C52937CD8F005A3954 /* blue_office_chair.usdz */,
 				6AB202C32937CD7E005A3954 /* tv_and_stand.usdz */,
 				6AB202C12937CD67005A3954 /* divan_sofa.usdz */,
 				6AB202BF2937CD56005A3954 /* brownleather_couch.usdz */,
-				6AB202BD2937CD3D005A3954 /* bunk_bed_black.usdz */,
 				6AB202BB2937CD2B005A3954 /* wooden_bed.usdz */,
 				6AB202B92937CC0A005A3954 /* bed.usdz */,
 				6AB202B72937CA08005A3954 /* bunk_bed.usdz */,
@@ -504,7 +498,6 @@
 				6AB202B82937CA08005A3954 /* bunk_bed.usdz in Resources */,
 				6AB203102937DD20005A3954 /* modern_bed.usdz in Resources */,
 				6AB202E42937D31F005A3954 /* egg_chair.usdz in Resources */,
-				6AB202C62937CD8F005A3954 /* blue_office_chair.usdz in Resources */,
 				6AB202FA2937D75C005A3954 /* vase.usdz in Resources */,
 				6AB202E82937D31F005A3954 /* poliform_bed.usdz in Resources */,
 				6AB203142937DD20005A3954 /* sculpture.usdz in Resources */,
@@ -514,7 +507,6 @@
 				6AB202CA2937CDB7005A3954 /* wooden_bookshelf.usdz in Resources */,
 				6AB203132937DD20005A3954 /* old_painting.usdz in Resources */,
 				6AB202E62937D31F005A3954 /* cover_chair.usdz in Resources */,
-				6AB202BE2937CD3D005A3954 /* bunk_bed_black.usdz in Resources */,
 				6AB2030E2937DD20005A3954 /* flowerpot.usdz in Resources */,
 				6AB202E12937D31F005A3954 /* black_chair.usdz in Resources */,
 				6AB202C22937CD68005A3954 /* divan_sofa.usdz in Resources */,
