@@ -36,7 +36,7 @@ struct DecARCoreDataApp: App {
             return UserDefaults.standard.object(forKey: key) != nil
         } */
       //  let alreadyLaunched = appFirstLaunch.integer(forKey: "AppLaunched")
-        if UserDefaults.standard.object(forKey: "AppLaunched") as! Int != 100 {
+        if UserDefaults.standard.object(forKey: "AppLaunched") == nil {
           //Key exists
         //}
        // if(isKeyPresentInUserDefaults(key: AppLaunched) = false) {
@@ -359,7 +359,7 @@ struct DecARCoreDataApp: App {
 
         WindowGroup {
 
-            ContentView()
+            ContentView(currentObject: .constant(SelectedFurniture("stool")))
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
 
             /*
@@ -445,7 +445,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         saveContext()
         
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
+        let contentView = ContentView(currentObject: .constant(SelectedFurniture("stool")))
     
         // Use a UIHostingController as window root view controller.
         let window = UIWindow(frame: UIScreen.main.bounds)

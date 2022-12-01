@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-class SelectedFurniture {
+class SelectedFurniture: Codable {
     var modelName: String
-    var id: Int = 0
+    var id = UUID().uuidString
     
-    init(modelName: String, id: Int) {
+    init(_ modelName: String) {
         self.modelName = modelName
-        self.id = id
     }
+    
 }
 
 struct FurnitureMenu: View {
@@ -22,26 +22,31 @@ struct FurnitureMenu: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @State private var currentId = 0
+    @State var currentObject: SelectedFurniture = SelectedFurniture("stool")
+    
+    @Binding var showFurMenu: Bool
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Furniture.furnitureName , ascending: true)],
         animation: .default)
     private var furnitures: FetchedResults<Furniture>
-    
+        
     var body: some View {
         VStack(alignment: .leading) {
             List {
                 ForEach(furnitures) { furniture in
-                    Button(furniture.furnitureName!){
-                        let selectedItem = SelectedFurniture(modelName: furniture.modelName!, id: currentId)
-                        print("Toimiko objektin luonti \(selectedItem.modelName)")
-                        currentId += 1
-                        print("Toimiko id korotus \(currentId)")
-
+                    Button(furniture.furnitureName!, action: {
+                        self.showFurMenu.toggle()
+                            currentObject = SelectedFurniture( furniture.modelName!)
+                            
+                            if let encoded = try? JSONEncoder().encode(currentObject) {
+                                UserDefaults.standard.set(encoded, forKey: "SelectedFurnitureCollection")
+                            }
+                            
+                        })
                     }
                     //    Text(furniture.furnitureName!)
                     
-                    }
                 }
                 
             Spacer()
@@ -57,6 +62,6 @@ struct FurnitureMenu: View {
 
 struct FurnitureMenu_Previews: PreviewProvider {
     static var previews: some View {
-        FurnitureMenu()
+        FurnitureMenu(showFurMenu: .constant(true))
     }
 }

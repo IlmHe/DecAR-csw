@@ -15,14 +15,12 @@ struct ContentView : View {
     @State var showMenu = false
     @State var showFurMenu = false
     @State var showSettings = false
-
     //Coredata
     @Environment(\.managedObjectContext) private var viewContext
+    @Binding public var currentObject: SelectedFurniture
+
     
     var body: some View {
-        
-        
-        
         let drag = DragGesture()
          .onEnded {
              if $0.translation.width < -100 {
@@ -36,12 +34,13 @@ struct ContentView : View {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     //Color.purple
-                    ARViewContainer(showMenu: self.$showMenu, showFurMenu: self.$showFurMenu, showSettings: self.$showSettings)
+                    ARViewContainer(showMenu: self.$showMenu, showFurMenu: self.$showFurMenu, showSettings: self.$showSettings, currentObject: self.$currentObject)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         //.offset(x: self.showMenu ? geometry.size.width/2 : 0)
                         .disabled(self.showMenu ? true : false)
                         //.offset(x: self.showSettings ? -geometry.size.width/2 : 0)
                         .disabled(self.showSettings ? true : false)
+                        .disabled(self.showFurMenu ? true : false)
                         .edgesIgnoringSafeArea(.all)
                     
                     if self.showMenu {
@@ -51,7 +50,7 @@ struct ContentView : View {
                     }
                     
                     if !self.showMenu && !self.showSettings && self.showFurMenu {
-                        FurnitureMenu()
+                        FurnitureMenu(showFurMenu: .constant(self.showFurMenu))
                             .transition(.move(edge: .bottom))
                     }
                     
@@ -126,7 +125,19 @@ struct ContentView : View {
 }
 
 extension ARView {
+    struct Holder {
+        static var currentObject: SelectedFurniture = SelectedFurniture("stool")
+    }
     
+    var currentObject: SelectedFurniture {
+        get {
+            return Holder.currentObject
+        }
+        set {
+            Holder.currentObject = newValue
+        }
+    }
+            
     var mapSaveURL: URL {
         do {
             return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("map.arexperience")
@@ -179,16 +190,47 @@ extension ARView {
         self.scene.anchors.removeAll()
         
         let worldMap = try? loadWorldMap(from: self.mapSaveURL)
-        
+                
+        if let data = UserDefaults.standard.object(forKey: "SelectedFurnitureCollection") as? Data {
+                
+            let selectedFurnitures = try? JSONDecoder().decode([SelectedFurniture].self, from: data)
+                            
+                for anchor in worldMap?.anchors ?? [] {
+                    
+                    if (anchor.name != nil) {
+                        print(anchor)
+                        
+                        let anchorEntity = AnchorEntity(world: anchor.transform)
+                        
+                        for furniture in selectedFurnitures ?? [] {
+                            if furniture.id == anchor.name {
+                                let currentFurniture = furniture
+                                print(currentFurniture)
+                                let model = retrieveModel(currentFurniture.modelName)
+                                
+                                anchorEntity.addChild(model)
+                                self.scene.addAnchor(anchorEntity)
+                                
+                                self.installGestures([.translation, .rotation], for: model)
+                                
+                                let position = simd_make_float3(anchor.transform.columns.3)
+                                
+                                placeObject(modelEntity: model, at: position)
+                            }
+                        }
+                        
+                    }
+                }
+            }
         
         for anchor in worldMap?.anchors ?? [] {
             
-            if anchor.name == "asd" {
+            if (anchor.name != nil) {
                 print(anchor)
 
                 let anchorEntity = AnchorEntity(world: anchor.transform)
 
-                let model = retrieveModel()
+                let model = retrieveModel(currentObject.modelName)
 
                 anchorEntity.addChild(model)
                 self.scene.addAnchor(anchorEntity)
@@ -200,6 +242,7 @@ extension ARView {
                 placeObject(modelEntity: model, at: position)
             }
         }
+        
                 
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.horizontal]
@@ -238,10 +281,10 @@ extension ARView {
         
         if let firstResult = results.first {
             let position = simd_make_float3(firstResult.worldTransform.columns.3)
-            
-            let model = retrieveModel()
-            
-            let arAnchor = ARAnchor(name: "asd", transform: firstResult.worldTransform)
+                        
+            let model = retrieveModel(currentObject.modelName)
+
+            let arAnchor = ARAnchor(name: currentObject.id, transform: firstResult.worldTransform)
             
             self.session.add(anchor: arAnchor)
                         
@@ -281,9 +324,10 @@ extension ARView {
     //Find location and remove anchor from object
     @objc func handleLongPress(recognizer: UILongPressGestureRecognizer) {
         let location = recognizer.location(in: self)
-        
+                
         if let modelEntity = self.entity(at: location) {
-            if let anchorEntity = modelEntity.anchor, anchorEntity.name == "chairAnchor" {
+            if let anchorEntity = modelEntity.anchor,
+                anchorEntity.name == currentObject.modelName {
                 anchorEntity.removeFromParent()
             }
         }
@@ -294,8 +338,8 @@ extension ARView {
      return it
     */
     
-    func retrieveModel() -> ModelEntity {
-        let modelEntity = try! ModelEntity.loadModel(named: "wooden_bed.usdz")
+    func retrieveModel(_ modelName: String) -> ModelEntity {
+        let modelEntity = try! ModelEntity.loadModel(named: modelName)
         
         modelEntity.generateCollisionShapes(recursive: true)
         
@@ -311,8 +355,8 @@ extension ARView {
         let anchor = AnchorEntity(world: location)
         let secondAnchor = AnchorEntity(world: location)
         
-        anchor.name = "chairAnchor"
-        secondAnchor.name = "asd"
+        anchor.name = currentObject.modelName
+        secondAnchor.name = currentObject.id
         
         anchor.addChild(modelEntity)
         
@@ -325,10 +369,12 @@ struct ARViewContainer: UIViewRepresentable {
     @Binding var showMenu: Bool
     @Binding var showFurMenu: Bool
     @Binding var showSettings: Bool
-    
+    @Binding var currentObject: SelectedFurniture
     
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
+        
+        arView.currentObject = currentObject
         
         arView.setupConfiguration()
         
@@ -353,7 +399,7 @@ struct ARViewContainer: UIViewRepresentable {
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(currentObject: .constant(SelectedFurniture("stool")))
     }
 }
 #endif
