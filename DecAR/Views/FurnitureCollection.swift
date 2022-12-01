@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-let furnitureName = NSLocalizedString("furnitureName", comment: "furnitureName")
+let furnitureNameLoc = NSLocalizedString("furnitureName", comment: "furnitureName")
 let furnitureAlertAddFurniture = NSLocalizedString("furnitureAlertAddFurniture", comment: "furnitureAlertAddFurniture")
 let furnitureFurnitureName = NSLocalizedString("furnitureFurnitureName", comment: "furnitureFurnitureName")
 let furnitureEnterFurnitureDetails = NSLocalizedString("furnitureEnterFurnitureDetails", comment: "furnitureEnterFurnitureDetails")
@@ -24,6 +24,8 @@ let furnitureCancelBtn = NSLocalizedString("listingsBtnCancel", comment: "listin
 struct FurnitureCollectionView: View {
     @State private var presentAlert = false
     @State private var furnitureName: String = ""
+    @State private var modelName: String = ""
+    @State private var category: String = ""
     //@State private var furnitureCategory: String = ""
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -38,7 +40,9 @@ struct FurnitureCollectionView: View {
             List {
                 ForEach(furnitures) { furniture in
                     NavigationLink {
-                        Text("\(furnitureName) \(furniture.furnitureName!)")
+                        Text("\(furnitureNameLoc) \(furniture.furnitureName!)")
+                        Text("3D model: \(furniture.modelName!)")
+                        Text("Category: \(furniture.category!)")
                     } label: {
                         Text(furniture.furnitureName!)
                     }
@@ -55,10 +59,15 @@ struct FurnitureCollectionView: View {
                     }
                     .alert(furnitureAlertAddFurniture, isPresented: $presentAlert, actions: {
                         TextField(furnitureFurnitureName, text: $furnitureName)
+                        TextField("Furniture category", text: $category)
+                        TextField("3D model name", text: $modelName)
 
                         Button(furnitureAddBtn, action: {
                             let newFurniture = Furniture(context: viewContext)
                             newFurniture.furnitureName = furnitureName
+                            newFurniture.category = category
+                            newFurniture.modelName = modelName
+
                             do {
                                 try viewContext.save()
                             } catch {

@@ -5,7 +5,10 @@
         <relationship name="furnituresInCategory" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Furniture" inverseName="furnitureCategory" inverseEntity="Furniture"/>
     </entity>
     <entity name="Furniture" representedClassName=".Furniture" syncable="YES">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="furniture" optional="YES" attributeType="String"/>
         <attribute name="furnitureName" optional="YES" attributeType="String"/>
+        <attribute name="modelName" optional="YES" attributeType="String"/>
         <relationship name="forClient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Listing" inverseName="clientFurniture" inverseEntity="Listing"/>
         <relationship name="furnitureCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="furnituresInCategory" inverseEntity="Category"/>
     </entity>

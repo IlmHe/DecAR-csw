@@ -27,7 +27,7 @@ struct ListingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Listing.clientName, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Listing.clientName!, ascending: true)],
         animation: .default)
     private var listings: FetchedResults<Listing>
 

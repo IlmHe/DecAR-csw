@@ -15,6 +15,8 @@ extension Furniture {
     }
 
     @NSManaged public var furnitureName: String?
+    @NSManaged public var category: String?
+    @NSManaged public var modelName: String?
     @NSManaged public var furnitureCategory: String?
     @NSManaged public var forClient: NSSet?
 
