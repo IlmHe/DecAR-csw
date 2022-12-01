@@ -124,7 +124,7 @@ struct ContentView : View {
     
 }
 
-extension ARView {
+extension ARView: ARCoachingOverlayViewDelegate {
     struct Holder {
         static var currentObject: SelectedFurniture = SelectedFurniture("stool")
     }
@@ -148,6 +148,17 @@ extension ARView {
     
     var mapDataFromFile: Data? {
         return try? Data(contentsOf: mapSaveURL)
+    }
+    
+    func addCoaching() {
+        let coachingOverlay = ARCoachingOverlayView()
+        
+        coachingOverlay.delegate = self
+        coachingOverlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        coachingOverlay.goal = .horizontalPlane
+        coachingOverlay.session = self.session
+        
+        self.addSubview(coachingOverlay)
     }
     
     //Setup AR config
@@ -377,6 +388,8 @@ struct ARViewContainer: UIViewRepresentable {
         arView.currentObject = currentObject
         
         arView.setupConfiguration()
+        
+        arView.addCoaching()
         
         arView.enableObjectAdd()
         
