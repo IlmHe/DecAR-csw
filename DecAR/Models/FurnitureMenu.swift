@@ -33,9 +33,16 @@ struct FurnitureMenu: View {
         
     var body: some View {
         VStack(alignment: .leading) {
-            Button("Dismiss") {
+            Button(action: {
                 isPresented = false
+            }) {
+                Image(systemName: "arrow.backward")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 32, height: 32)
             }
+            .padding(.leading, 30)
+            .padding(.top, 10)
             List {
                 ForEach(furnitures) { furniture in
                     Button(furniture.furnitureName!, action: {
