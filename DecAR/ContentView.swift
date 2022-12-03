@@ -84,6 +84,9 @@ struct ContentView : View {
                                 }
                             }) {
                                 Image(systemName: "line.horizontal.3")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 32, height: 32)
                             }
                         }
 
@@ -103,6 +106,9 @@ struct ContentView : View {
                                 }
                             }) {
                                 Image(systemName: "gear")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 32, height: 32)
                             }
                         }
                         
@@ -110,30 +116,22 @@ struct ContentView : View {
                     
                     ToolbarItemGroup(placement: .bottomBar) {
                         if !(self.showFurMenu || self.showMenu) {
-                           // Button("Plus", action: {
-                            Button("Plus") {
-                                //withAnimation{
-                                    //showFurMenu = true
-                                    showingDetail = true
-                              //  }
-                                
+                            Button(action: {
+                                showingDetail = true
+                            }) {
+                                Image(systemName: "plus.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 58, height: 58)
+                                .sheet(isPresented: $showingDetail) {
+                                    FurnitureMenu(isPresented: $showingDetail)
+                                }
                             }
-                            .sheet(isPresented: $showingDetail) {
-                            //.sheet(showFurMenu: $showFurMenu) {
-                                FurnitureMenu(isPresented: $showingDetail)
-                                //FurnitureMenu(showFurMenu: $showFurMenu)
-
-                            }
-                            // Image(systemName: "plus.circle")
-                            //    .imageScale(.large)
                         }
                            
-                        }
                     }
-                    /*
-                            Button("Plus") {
-                                showingDetail = true
-                            }*/
+                }
+                            
                 } //.toolbarBackground(.hidden, for: .navigationBar)
             }
             
