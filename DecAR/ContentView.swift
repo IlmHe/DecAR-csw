@@ -145,20 +145,35 @@ struct ContentView : View {
 
 extension ARView: ARCoachingOverlayViewDelegate {
     struct Holder {
+        static var currentModelName: String = "Stool"
         static var currentObject: SelectedFurniture = SelectedFurniture("stool")
-        
+        static var currentList: Array<SelectedFurniture> = [SelectedFurniture("Stool")]
     }
     
-    
+    var currentModelName: String {
+        get {
+            return Holder.currentModelName
+        }
+        set {
+            Holder.currentModelName = newValue
+        }
+    }
     
     var currentObject: SelectedFurniture {
         get {
             return Holder.currentObject
         }
         set {
-            print("New value \(newValue.modelName)")
             Holder.currentObject = newValue
-            print("HOOOLDER \(Holder.currentObject.modelName)")
+        }
+    }
+    
+    var currentList: Array<SelectedFurniture> {
+        get {
+            return Holder.currentList
+        }
+        set {
+            Holder.currentList = newValue
         }
     }
           
@@ -185,34 +200,9 @@ extension ARView: ARCoachingOverlayViewDelegate {
         self.addSubview(coachingOverlay)
     }
     
-    func makePeace() -> (SelectedFurniture) {
-        
+    func makePeace() -> String {
         let furDetail = UserDefaults.standard.object(forKey: "AppCurrentObject") as? String ?? String()
-        print("TADAAA \(furDetail)")
-        if let dataFur = UserDefaults.standard.data(forKey: "SelectedFurnitureCollection") {
-            do {
-                let decoder = JSONDecoder()
-
-                let getSavedFur = try decoder.decode(SelectedFurniture.self, from: dataFur)
-                print("Printtaaa jo \(getSavedFur.modelName)")
-                return getSavedFur
-                //return ("Make peace \(getSavedFur.modelName)")
-            } catch {
-                print("Unable to Decode dataFurniture")
-            }
-        }
-        return SelectedFurniture("stool")
-       // return ("Something went wrong!")
-        /*
-        if let data = UserDefaults.standard.object(forKey: "SelectedFurnitureCollection") as? Data {
-            
-            let selectedFurnitures = try? JSONDecoder().decode([SelectedFurniture].self, from: data)
-            newFurniture = selectedFurnitures
-                        print("MUUUUUU \(newFurniture)")
-            return ("JEE \(newFurniture)")
-        }
-          */
-       // return ("NADA \(furDetail)")
+        return furDetail
     }
     
     //Setup AR config
@@ -255,74 +245,39 @@ extension ARView: ARCoachingOverlayViewDelegate {
         self.scene.anchors.removeAll()
         
         let worldMap = try? loadWorldMap(from: self.mapSaveURL)
-        /*
-        if let dataFur = UserDefaults.standard.data(forKey: "SelectedFurnitureCollection") {
-            do {
-                let decoder = JSONDecoder()
-
-                let getSavedFur = try decoder.decode(SelectedFurniture.self, from: dataFur)
-                print("Printtaaa jo \(getSavedFur.modelName)")
-                return ("Make peace \(getSavedFur.modelName)")
-            } catch {
-                print("Unable to Decode dataFurniture")
-            }
-        }
-          */
         
         if let data = UserDefaults.standard.object(forKey: "SelectedFurnitureCollection") as? Data {
-                
+            
             let selectedFurnitures = try? JSONDecoder().decode([SelectedFurniture].self, from: data)
-           // let selectedFurnitures = try? JSONDecoder().decode(SelectedFurniture.self, from: data)
-                for anchor in worldMap?.anchors ?? [] {
-           
-                    if (anchor.name != nil) {
-                        print(anchor)
+            
+            for anchor in worldMap?.anchors ?? [] {
+                
+                if (anchor.name != nil) {
+                    print(anchor)
+                    
+                    let anchorEntity = AnchorEntity(world: anchor.transform)
+                    
+                    for furniture in selectedFurnitures ?? [] {
                         
-                        let anchorEntity = AnchorEntity(world: anchor.transform)
-                        
-                        for furniture in selectedFurnitures ?? [] {
-                       
-                            if furniture.id == anchor.name {
-                                let currentFurniture = furniture
-                                print(currentFurniture)
-                                let model = retrieveModel(currentFurniture.modelName)
-                                
-                                anchorEntity.addChild(model)
-                                self.scene.addAnchor(anchorEntity)
-                                
-                                self.installGestures([.translation, .rotation], for: model)
-                                
-                                let position = simd_make_float3(anchor.transform.columns.3)
-                                
-                                placeObject(modelEntity: model, at: position)
-                            }
+                        if furniture.id == anchor.name {
+                            let currentFurniture = furniture
+                            print(currentFurniture)
+                            let model = retrieveModel(currentFurniture.modelName)
+                            
+                            anchorEntity.addChild(model)
+                            self.scene.addAnchor(anchorEntity)
+                            
+                            self.installGestures([.translation, .rotation], for: model)
+                            
+                            let position = simd_make_float3(anchor.transform.columns.3)
+                            
+                            placeObject(modelEntity: model, at: position)
                         }
-                        
                     }
+                    
                 }
             }
-        
-        
-        for anchor in worldMap?.anchors ?? [] {
-            
-            if (anchor.name != nil) {
-                print(anchor)
-
-                let anchorEntity = AnchorEntity(world: anchor.transform)
-
-                let model = retrieveModel(currentObject.modelName)
-
-                anchorEntity.addChild(model)
-                self.scene.addAnchor(anchorEntity)
-                
-                self.installGestures([.translation, .rotation], for: model)
-                
-                let position = simd_make_float3(anchor.transform.columns.3)
-                
-                placeObject(modelEntity: model, at: position)
-            }
         }
-        
                 
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.horizontal]
@@ -361,7 +316,15 @@ extension ARView: ARCoachingOverlayViewDelegate {
         
         if let firstResult = results.first {
             let position = simd_make_float3(firstResult.worldTransform.columns.3)
-                        
+            
+            let asd = SelectedFurniture(currentModelName)
+            self.currentObject = asd
+            self.currentList.append(asd)
+            
+            let encoder = JSONEncoder()
+            let dataFurniture = try? encoder.encode(currentList)
+            UserDefaults.standard.set(dataFurniture, forKey: "SelectedFurnitureCollection")
+            
             let model = retrieveModel(currentObject.modelName)
 
             let arAnchor = ARAnchor(name: currentObject.id, transform: firstResult.worldTransform)
@@ -409,6 +372,18 @@ extension ARView: ARCoachingOverlayViewDelegate {
             if let anchorEntity = modelEntity.anchor,
                 anchorEntity.name == currentObject.modelName {
                 anchorEntity.removeFromParent()
+                
+                for (index, object) in self.currentList.enumerated() {
+                    if object.id == currentObject.id {
+                        self.currentList.remove(at: index)
+                    }
+                }
+                
+                UserDefaults.standard.removeObject(forKey: "SelectedFurnitureCollection")
+                
+                let encoder = JSONEncoder()
+                let dataFurniture = try? encoder.encode(currentList)
+                UserDefaults.standard.set(dataFurniture, forKey: "SelectedFurnitureCollection")
             }
         }
     }
@@ -431,7 +406,7 @@ extension ARView: ARCoachingOverlayViewDelegate {
      a name for removal and add model to it
     */
     
-    func placeObject(modelEntity:ModelEntity, at location:SIMD3<Float> /*, worldTrans:simd_float4x4*/) {
+    func placeObject(modelEntity:ModelEntity, at location:SIMD3<Float>) {
         let anchor = AnchorEntity(world: location)
         let secondAnchor = AnchorEntity(world: location)
         
@@ -454,14 +429,8 @@ struct ARViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
         
-        arView.currentObject = currentObject
-        let furString = currentObject
-        print("FURRRYY \(furString.modelName)")
-        
-        arView.currentObject.modelName = furString.modelName
-        print("AAAAAAAAAAAA \(currentObject.modelName)")
-        
-        arView.makePeace()
+        arView.currentModelName = arView.makePeace()
+
         arView.setupConfiguration()
         
         arView.addCoaching()
@@ -480,15 +449,7 @@ struct ARViewContainer: UIViewRepresentable {
      
     
     func updateUIView(_ uiView: ARView, context: Context) {
-        let furryBoy = SelectedFurniture("Bed")
-        let furString = uiView.makePeace()
-        print("FURRRYY \(furString.modelName)")
-        //currentObject = furryBoy
-        uiView.currentObject = uiView.makePeace()
-        //uiView.makePeace()
-        //print("UI PEACE \(uiView.makePeace.modelName)")
-        print("AAAAAAAAAAAA \(currentObject.modelName)")
-
+        uiView.currentModelName = uiView.makePeace()
     }
     
 }
