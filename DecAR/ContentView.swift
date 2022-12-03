@@ -13,8 +13,12 @@ import SceneKit
 
 struct ContentView : View {
     @State var showMenu = false
-    @State var showFurMenu = false
+    @State private var showFurMenu = false
     @State var showSettings = false
+
+    @State private var showingDetail = false
+
+
     //Coredata
     @Environment(\.managedObjectContext) private var viewContext
     @Binding public var currentObject: SelectedFurniture
@@ -30,38 +34,40 @@ struct ContentView : View {
              }
          }
         
-        return NavigationView {
-            GeometryReader { geometry in
-                ZStack(alignment: .leading) {
-                    //Color.purple
-                    ARViewContainer(showMenu: self.$showMenu, showFurMenu: self.$showFurMenu, showSettings: self.$showSettings, currentObject: self.$currentObject)
-                        .frame(width: geometry.size.width, height: geometry.size.height)
-                        //.offset(x: self.showMenu ? geometry.size.width/2 : 0)
-                        .disabled(self.showMenu ? true : false)
-                        //.offset(x: self.showSettings ? -geometry.size.width/2 : 0)
-                        .disabled(self.showSettings ? true : false)
-                        .disabled(self.showFurMenu ? true : false)
-                        .edgesIgnoringSafeArea(.all)
-                    
-                    if self.showMenu {
-                        Menu()
-                            .frame(width: geometry.size.width/2)
-                            .transition(.move(edge: .leading))
-                    }
-                    
-                    if !self.showMenu && !self.showSettings && self.showFurMenu {
-                        FurnitureMenu(showFurMenu: .constant(self.showFurMenu))
-                            .transition(.move(edge: .bottom))
-                    }
-                    
-                    if !self.showMenu && !self.showFurMenu && self.showSettings {
-                        Settings()
-                            .offset(x: geometry.size.width/2)
-                            .frame(width: geometry.size.width/2)
-                            .transition(.move(edge: .trailing))
-                    }
-                    
-                }
+        
+            return NavigationView {
+                        GeometryReader { geometry in
+                            ZStack(alignment: .leading) {
+                                //Color.purple
+                                ARViewContainer(showMenu: self.$showMenu, showFurMenu: self.$showFurMenu, showSettings: self.$showSettings, currentObject: self.$currentObject)
+                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                                    //.offset(x: self.showMenu ? geometry.size.width/2 : 0)
+                                    .disabled(self.showMenu ? true : false)
+                                    //.offset(x: self.showSettings ? -geometry.size.width/2 : 0)
+                                    .disabled(self.showSettings ? true : false)
+                                    .disabled(self.showFurMenu ? true : false)
+                                    .edgesIgnoringSafeArea(.all)
+                                
+                                if self.showMenu {
+                                    Menu()
+                                        .frame(width: geometry.size.width/2)
+                                        .transition(.move(edge: .leading))
+                                }
+                                
+                                if !self.showMenu && !self.showSettings && self.showFurMenu {
+                                    FurnitureMenu(isPresented: .constant(self.showingDetail))
+                                                  //showFurMenu: .constant(self.showFurMenu))
+                                        .transition(.move(edge: .bottom))
+                                }
+                                
+                                if !self.showMenu && !self.showFurMenu && self.showSettings {
+                                    Settings()
+                                        .offset(x: geometry.size.width/2)
+                                        .frame(width: geometry.size.width/2)
+                                        .transition(.move(edge: .trailing))
+                                }
+                                
+                            }
                 .gesture(drag)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -104,40 +110,58 @@ struct ContentView : View {
                     
                     ToolbarItemGroup(placement: .bottomBar) {
                         if !(self.showFurMenu || self.showMenu) {
-                            Button(action: {
-                                withAnimation{
-                                    self.showFurMenu = true
-                                }
-                            }) {
-                                Image(systemName: "plus.circle")
-                                    .imageScale(.large)
+                           // Button("Plus", action: {
+                            Button("Plus") {
+                                //withAnimation{
+                                    //showFurMenu = true
+                                    showingDetail = true
+                              //  }
+                                
                             }
+                            .sheet(isPresented: $showingDetail) {
+                            //.sheet(showFurMenu: $showFurMenu) {
+                                FurnitureMenu(isPresented: $showingDetail)
+                                //FurnitureMenu(showFurMenu: $showFurMenu)
+
+                            }
+                            // Image(systemName: "plus.circle")
+                            //    .imageScale(.large)
+                        }
+                           
                         }
                     }
-                    
-                }//.toolbarBackground(.hidden, for: .navigationBar)
+                    /*
+                            Button("Plus") {
+                                showingDetail = true
+                            }*/
+                } //.toolbarBackground(.hidden, for: .navigationBar)
             }
             
         }
         
     }
     
-}
+
 
 extension ARView: ARCoachingOverlayViewDelegate {
     struct Holder {
         static var currentObject: SelectedFurniture = SelectedFurniture("stool")
+        
     }
+    
+    
     
     var currentObject: SelectedFurniture {
         get {
             return Holder.currentObject
         }
         set {
+            print("New value \(newValue.modelName)")
             Holder.currentObject = newValue
+            print("HOOOLDER \(Holder.currentObject.modelName)")
         }
     }
-            
+          
     var mapSaveURL: URL {
         do {
             return try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("map.arexperience")
@@ -159,6 +183,36 @@ extension ARView: ARCoachingOverlayViewDelegate {
         coachingOverlay.session = self.session
         
         self.addSubview(coachingOverlay)
+    }
+    
+    func makePeace() -> (SelectedFurniture) {
+        
+        let furDetail = UserDefaults.standard.object(forKey: "AppCurrentObject") as? String ?? String()
+        print("TADAAA \(furDetail)")
+        if let dataFur = UserDefaults.standard.data(forKey: "SelectedFurnitureCollection") {
+            do {
+                let decoder = JSONDecoder()
+
+                let getSavedFur = try decoder.decode(SelectedFurniture.self, from: dataFur)
+                print("Printtaaa jo \(getSavedFur.modelName)")
+                return getSavedFur
+                //return ("Make peace \(getSavedFur.modelName)")
+            } catch {
+                print("Unable to Decode dataFurniture")
+            }
+        }
+        return SelectedFurniture("stool")
+       // return ("Something went wrong!")
+        /*
+        if let data = UserDefaults.standard.object(forKey: "SelectedFurnitureCollection") as? Data {
+            
+            let selectedFurnitures = try? JSONDecoder().decode([SelectedFurniture].self, from: data)
+            newFurniture = selectedFurnitures
+                        print("MUUUUUU \(newFurniture)")
+            return ("JEE \(newFurniture)")
+        }
+          */
+       // return ("NADA \(furDetail)")
     }
     
     //Setup AR config
@@ -201,19 +255,33 @@ extension ARView: ARCoachingOverlayViewDelegate {
         self.scene.anchors.removeAll()
         
         let worldMap = try? loadWorldMap(from: self.mapSaveURL)
-                
+        /*
+        if let dataFur = UserDefaults.standard.data(forKey: "SelectedFurnitureCollection") {
+            do {
+                let decoder = JSONDecoder()
+
+                let getSavedFur = try decoder.decode(SelectedFurniture.self, from: dataFur)
+                print("Printtaaa jo \(getSavedFur.modelName)")
+                return ("Make peace \(getSavedFur.modelName)")
+            } catch {
+                print("Unable to Decode dataFurniture")
+            }
+        }
+          */
+        
         if let data = UserDefaults.standard.object(forKey: "SelectedFurnitureCollection") as? Data {
                 
             let selectedFurnitures = try? JSONDecoder().decode([SelectedFurniture].self, from: data)
-                            
+           // let selectedFurnitures = try? JSONDecoder().decode(SelectedFurniture.self, from: data)
                 for anchor in worldMap?.anchors ?? [] {
-                    
+           
                     if (anchor.name != nil) {
                         print(anchor)
                         
                         let anchorEntity = AnchorEntity(world: anchor.transform)
                         
                         for furniture in selectedFurnitures ?? [] {
+                       
                             if furniture.id == anchor.name {
                                 let currentFurniture = furniture
                                 print(currentFurniture)
@@ -233,6 +301,7 @@ extension ARView: ARCoachingOverlayViewDelegate {
                     }
                 }
             }
+        
         
         for anchor in worldMap?.anchors ?? [] {
             
@@ -386,13 +455,19 @@ struct ARViewContainer: UIViewRepresentable {
         let arView = ARView(frame: .zero)
         
         arView.currentObject = currentObject
+        let furString = currentObject
+        print("FURRRYY \(furString.modelName)")
         
+        arView.currentObject.modelName = furString.modelName
+        print("AAAAAAAAAAAA \(currentObject.modelName)")
+        
+        arView.makePeace()
         arView.setupConfiguration()
         
         arView.addCoaching()
         
         arView.enableObjectAdd()
-        
+
         arView.enableObjectRemoval()
       
         arView.enableWorldPersistance()
@@ -405,6 +480,15 @@ struct ARViewContainer: UIViewRepresentable {
      
     
     func updateUIView(_ uiView: ARView, context: Context) {
+        let furryBoy = SelectedFurniture("Bed")
+        let furString = uiView.makePeace()
+        print("FURRRYY \(furString.modelName)")
+        //currentObject = furryBoy
+        uiView.currentObject = uiView.makePeace()
+        //uiView.makePeace()
+        //print("UI PEACE \(uiView.makePeace.modelName)")
+        print("AAAAAAAAAAAA \(currentObject.modelName)")
+
     }
     
 }

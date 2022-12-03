@@ -17,6 +17,19 @@ struct Menu: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
+
+                NavigationLink(destination: Settings()) {
+                    Image(systemName: "map")
+                        .foregroundColor(.gray)
+                        .imageScale(.large)
+                    Text(menuMapText)
+                            .foregroundColor(.gray)
+                            .font(.headline)
+                }
+            }
+            .padding(.top, 100)
+            HStack {
+
                 NavigationLink(destination: Settings()) {
                     Image(systemName: "gear")
                         .foregroundColor(.gray)
