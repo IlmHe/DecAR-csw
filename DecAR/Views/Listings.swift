@@ -72,26 +72,7 @@ struct ListingsView: View {
                                 self.presentAlert = false
                             })
                         }
-                    /*
-                        TextField(listingsClientName2, text: $clientName)
-                        TextField(listingsClientAddress2, text: $clientAddress)
-
-                        Button(listingsAddBtn, action: {
-                            let newListing = Listing(context: viewContext)
-                            newListing.clientName = clientName
-                            newListing.clientAddress = clientAddress
-                            do {
-                                try viewContext.save()
-                            } catch {
-                                let nsError = error as NSError
-                                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                            }
-                        })
-                        Button(listingsBtnCancel, role: .cancel, action: {})
-                    }, message: {
-                        Text(listingsDetails)
-                    }
-                     */
+                
                     }
             }
                      
@@ -151,4 +132,23 @@ struct Previews_Listings_Previews: PreviewProvider {
 }, message: {
  Text(listingsDetails)
 })
+ 
+ TextField(listingsClientName2, text: $clientName)
+ TextField(listingsClientAddress2, text: $clientAddress)
+
+ Button(listingsAddBtn, action: {
+     let newListing = Listing(context: viewContext)
+     newListing.clientName = clientName
+     newListing.clientAddress = clientAddress
+     do {
+         try viewContext.save()
+     } catch {
+         let nsError = error as NSError
+         fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+     }
+ })
+ Button(listingsBtnCancel, role: .cancel, action: {})
+}, message: {
+ Text(listingsDetails)
+}
 */

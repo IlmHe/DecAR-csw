@@ -57,7 +57,8 @@ struct FurnitureCollectionView: View {
                         Button(furnitureAddBtn) {
                         presentAlert = true
                     }
-                    .alert(furnitureAlertAddFurniture, isPresented: $presentAlert, actions: {
+                        .popover(isPresented: self.$presentAlert, arrowEdge: .bottom) {
+                        Text(furnitureAlertAddFurniture)
                         TextField(furnitureFurnitureName, text: $furnitureName)
                         TextField("Furniture category", text: $category)
                         TextField("3D model name", text: $modelName)
@@ -70,15 +71,16 @@ struct FurnitureCollectionView: View {
 
                             do {
                                 try viewContext.save()
+                                self.presentAlert = false
                             } catch {
                                 let nsError = error as NSError
                                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
                             }
                         })
-                        Button(furnitureCancelBtn, role: .cancel, action: {})
-                    }, message: {
-                        Text(furnitureEnterFurnitureDetails)
-                    })
+                            Button(listingsBtnCancel, action: {
+                                self.presentAlert = false
+                            })
+                    }
                     }
             }
             Text(furnitureSelectItem)
@@ -106,3 +108,28 @@ struct FurnitureCollectionView_Previews: PreviewProvider {
         ContentView(currentObject: .constant(SelectedFurniture("stool"))).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
+
+/*
+ .alert(furnitureAlertAddFurniture, isPresented: $presentAlert, actions: {
+     TextField(furnitureFurnitureName, text: $furnitureName)
+     TextField("Furniture category", text: $category)
+     TextField("3D model name", text: $modelName)
+
+     Button(furnitureAddBtn, action: {
+         let newFurniture = Furniture(context: viewContext)
+         newFurniture.furnitureName = furnitureName
+         newFurniture.category = category
+         newFurniture.modelName = modelName
+
+         do {
+             try viewContext.save()
+         } catch {
+             let nsError = error as NSError
+             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+         }
+     })
+     Button(furnitureCancelBtn, role: .cancel, action: {})
+ }, message: {
+     Text(furnitureEnterFurnitureDetails)
+ })
+ */
