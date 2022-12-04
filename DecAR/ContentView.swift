@@ -40,10 +40,7 @@ struct ContentView : View {
                             ZStack(alignment: .leading) {
                                 //Color.purple
                                 ARViewContainer(showMenu: self.$showMenu, showFurMenu: self.$showFurMenu, showSettings: self.$showSettings, currentObject: self.$currentObject)
-                                    .frame(width: geometry.size.width, height: geometry.size.height)
-                                    //.offset(x: self.showMenu ? geometry.size.width/2 : 0)
                                     .disabled(self.showMenu ? true : false)
-                                    //.offset(x: self.showSettings ? -geometry.size.width/2 : 0)
                                     .disabled(self.showSettings ? true : false)
                                     .disabled(self.showFurMenu ? true : false)
                                     .edgesIgnoringSafeArea(.all)
