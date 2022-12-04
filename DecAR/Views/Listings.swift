@@ -52,7 +52,27 @@ struct ListingsView: View {
                         Button(listingsAddBtn) {
                         presentAlert = true
                     }
-                    .alert(listingsAlertAddListing, isPresented: $presentAlert, actions: {
+                        .popover(isPresented: self.$presentAlert, arrowEdge: .bottom) {
+                            Text(listingsAlertAddListing)
+                            TextField(listingsClientName2, text: $clientName)
+                            TextField(listingsClientAddress2, text: $clientAddress)
+                            Button(listingsAddBtn, action: {
+                                let newListing = Listing(context: viewContext)
+                                newListing.clientName = clientName
+                                newListing.clientAddress = clientAddress
+                                do {
+                                    try viewContext.save()
+                                    self.presentAlert = false
+                                } catch {
+                                    let nsError = error as NSError
+                                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                                }
+                            })
+                            Button(listingsBtnCancel, action: {
+                                self.presentAlert = false
+                            })
+                        }
+                    /*
                         TextField(listingsClientName2, text: $clientName)
                         TextField(listingsClientAddress2, text: $clientAddress)
 
@@ -70,9 +90,11 @@ struct ListingsView: View {
                         Button(listingsBtnCancel, role: .cancel, action: {})
                     }, message: {
                         Text(listingsDetails)
-                    })
+                    }
+                     */
                     }
             }
+                     
             Text(listingsSelectItem)
         }
     }
@@ -105,4 +127,28 @@ struct Previews_Listings_Previews: PreviewProvider {
         /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
     }
 }
+ 
+ 
+ Button(listingsAddBtn) {
+ presentAlert = true
+}
+.alert(listingsAlertAddListing, isPresented: $presentAlert, actions: {
+ TextField(listingsClientName2, text: $clientName)
+ TextField(listingsClientAddress2, text: $clientAddress)
+
+ Button(listingsAddBtn, action: {
+     let newListing = Listing(context: viewContext)
+     newListing.clientName = clientName
+     newListing.clientAddress = clientAddress
+     do {
+         try viewContext.save()
+     } catch {
+         let nsError = error as NSError
+         fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+     }
+ })
+ Button(listingsBtnCancel, role: .cancel, action: {})
+}, message: {
+ Text(listingsDetails)
+})
 */
