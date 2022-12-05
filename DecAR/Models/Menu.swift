@@ -18,7 +18,7 @@ struct Menu: View {
         VStack(alignment: .leading) {
             HStack {
 
-                NavigationLink(destination: Settings()) {
+                NavigationLink(destination: MapView()) {
                     Image(systemName: "map")
                         .foregroundColor(.gray)
                         .imageScale(.large)
