@@ -20,23 +20,9 @@ struct MapListingObject: Identifiable {
   @State var coordinate: CLLocationCoordinate2D
 }
 
-
-class ListingObject: ObservableObject {
-  @Published var name = ""
-  @Published var address = ""
-  //@Published var coordinates: CLLocationCoordinate2D?
-  
-  // A unique identifier that never changes.
-  let identifier = UUID()
-}
-
-
 struct MapView: View {
   //var listingObject: ListingObject
   //@State var coordinateState: CLLocationCoordinate2D
-  
-  //@State var addressString = "1600 Pennsylvania Ave, Washington D.C."
-  //@StateObject private var locationManager = LocationManager()
   
   @FetchRequest(
     sortDescriptors: [NSSortDescriptor(keyPath: \Listing.clientName, ascending: true)],
@@ -45,11 +31,9 @@ struct MapView: View {
   // Holds all of the listing objects.
   private var listings: FetchedResults<Listing>
   
-  //@ObservedObject var lm = LocationManager()
-  
   @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.16952, longitude: 24.93545), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
   
-  
+  /*
   let listingsHC = [
     MapListingObject(
       name: "Paikka 1",
@@ -62,42 +46,36 @@ struct MapView: View {
       addressName: "this is address",
       coordinate: CLLocationCoordinate2D(latitude: 61, longitude: 26))
   ]
+   */
   
-  
-  // TÄLLÄ JOS SAIS JOTENKIN KAIKILLE LISTINGEILLE COORDINAATIT OSOITTEESTA
   func listingsLoop() -> Void {
     for (listing) in listings{
       getCoordinate(addressString: listing.clientAddress ?? "Rastaspuistontie 3") { geocodedCoordinates, error in
-        print("printprintprint: ", geocodedCoordinates)
+        print("geocode print: ", geocodedCoordinates)
       }
     }
     return
   }
   
   
- /**
-  *TEE HARDCODE BRANCH MIHIN HARDCODEE LISTINGS JA PUSHAA SE REPO
-  *
-  *SIT JATKA TÄTÄ
-  */
-  
   var body: some View {
     
     /*
      getCoordinate(addressString: listing.clientAddress ?? "Rastaspuistontie 3",
-     completionHandler: {
-     (geocodedCoordinates: CLLocationCoordinate2D, error) -> CLLocationCoordinate2D in
-     if error === nil {
-     coordinates = geocodedCoordinates
-     }
+        completionHandler: {
+        (geocodedCoordinates: CLLocationCoordinate2D, error) -> CLLocationCoordinate2D in
+        if error === nil {
+          coordinates = geocodedCoordinates
+        }
      }
      */
     
-    /*Map(coordinateRegion: $mapRegion, annotationItems: listings) { listing in
-     MapAnnotation(coordinate: listing.coordinate) {*/
     ZStack {
-      Map(coordinateRegion: $mapRegion, annotationItems: listingsHC) { listing in
-        MapAnnotation(coordinate: listing.coordinate) {
+      Map(coordinateRegion: $mapRegion, annotationItems: listings) { listing in
+        
+        let coordinate = getCoordinate(addressString: listing.clientAddress, completionHandler: <#T##(CLLocationCoordinate2D, NSError?) -> Void#>)
+        
+        MapAnnotation(coordinate: coordinate ?? "Rastaspuistontie 3") {
           
           VStack {
             Circle()
@@ -105,32 +83,18 @@ struct MapView: View {
               .frame(width: 30, height: 30)
             
               .onTapGesture {
-                print("Tapped on \(String(describing: listing.name))")
+                print("Tapped on \(String(describing: listing.clientName))")
                 
               }
-            Text(listing.name ?? "No name")
+            Text(listing.clientName ?? "No name")
           }
         }
       }
     }
   }
-  /*
-   // geocoding func 1
-   func addressToCoordinates(forAddress address: String, completion: @escaping (CLLocationCoordinate2D?) -> Void) {
-   let geocoder = CLGeocoder()
-   geocoder.geocodeAddressString(address) {
-   (placemarks, error) in
-   guard error == nil else {
-   print("Geocoding error: \(error!)")
-   completion(nil)
-   return
-   }
-   completion(placemarks?.first?.location?.coordinate)
-   }
-   }
-   }*/
   
-  // geocoding func 2
+  
+  // geocoding func 1
   func getCoordinate( addressString : String,
                       completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
     let geocoder = CLGeocoder()
@@ -149,6 +113,24 @@ struct MapView: View {
   }
 }
   
+
+/*
+ // geocoding func 2
+ func addressToCoordinates(forAddress address: String, completion: @escaping (CLLocationCoordinate2D?) -> Void) {
+ let geocoder = CLGeocoder()
+ geocoder.geocodeAddressString(address) {
+ (placemarks, error) in
+ guard error == nil else {
+ print("Geocoding error: \(error!)")
+ completion(nil)
+ return
+ }
+ completion(placemarks?.first?.location?.coordinate)
+ }
+ }
+ }*/
+
+
   /*
    class LocationManager : ObservableObject {
    @Published var location : CLLocationCoordinate2D?
