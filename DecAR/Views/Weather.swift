@@ -16,7 +16,7 @@ enum NetwokrError: Error {
 
 class GetWeather {
     
-    @State private var apiKey = "10fa652305f6b2fc849c3ac9acdc7e50"
+    @State private var apiKey = ""
     @State private var language: String = "en"
    // @State private var city = "Espoo"
     
