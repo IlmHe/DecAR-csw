@@ -17,24 +17,9 @@ extension Furniture {
     @NSManaged public var furnitureName: String?
     @NSManaged public var category: String?
     @NSManaged public var modelName: String?
-    @NSManaged public var furnitureCategory: String?
-    @NSManaged public var forClient: NSSet?
-
 }
 
 extension Furniture {
-
-    @objc(addListingObject:)
-    @NSManaged public func addToListing(_ value: Listing)
-
-    @objc(removeListingObject:)
-    @NSManaged public func removeFromListing(_ value: Listing)
-
-    @objc(addListing:)
-    @NSManaged public func addToListing(_ values: NSSet)
-
-    @objc(removeListing:)
-    @NSManaged public func removeFromListing(_ values: NSSet)
 
 }
 

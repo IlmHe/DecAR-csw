@@ -67,14 +67,3 @@ struct FurnitureMenu: View {
         .edgesIgnoringSafeArea(.all)
     }
 }
-/*
-struct FurnitureMenu_Previews: PreviewProvider {
-    static var previews: some View {
-<<<<<<< Updated upstream
-        FurnitureMenu(showFurMenu: .constant(true))
-=======
-//        FurnitureMenu()
->>>>>>> Stashed changes
-    }
-}
-*/

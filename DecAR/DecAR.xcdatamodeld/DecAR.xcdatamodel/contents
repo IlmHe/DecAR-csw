@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Category" representedClassName="Category" syncable="YES">
-        <attribute name="categoryName" optional="YES" attributeType="String"/>
-        <relationship name="furnituresInCategory" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Furniture" inverseName="furnitureCategory" inverseEntity="Furniture"/>
-    </entity>
     <entity name="Furniture" representedClassName=".Furniture" syncable="YES">
         <attribute name="category" optional="YES" attributeType="String"/>
-        <attribute name="furniture" optional="YES" attributeType="String"/>
         <attribute name="furnitureName" optional="YES" attributeType="String"/>
         <attribute name="modelName" optional="YES" attributeType="String"/>
-        <relationship name="forClient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Listing" inverseName="clientFurniture" inverseEntity="Listing"/>
-        <relationship name="furnitureCategory" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="furnituresInCategory" inverseEntity="Category"/>
     </entity>
     <entity name="Listing" representedClassName=".Listing" syncable="YES">
         <attribute name="clientAddress" optional="YES" attributeType="String"/>
         <attribute name="clientName" optional="YES" attributeType="String"/>
-        <relationship name="clientFurniture" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Furniture" inverseName="forClient" inverseEntity="Furniture"/>
     </entity>
 </model>
