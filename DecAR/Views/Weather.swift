@@ -8,6 +8,10 @@
 import Foundation
 import SwiftUI
 
+let weatherSearch = NSLocalizedString("weatherSearch", comment: "weatherSearch")
+let weatherFetchJoke = NSLocalizedString("weatherFetchJoke", comment: "weatherFetchJoke")
+
+
 enum NetwokrError: Error {
     case decodingError
     case badUrl
@@ -66,7 +70,7 @@ struct WeatherView: View {
            
            VStack {
                
-               TextField("Search", text: self.$city,
+               TextField(weatherSearch, text: self.$city,
                onEditingChanged: { _ in }, onCommit: {
                    
                    self.weatherInfo.fetchWeather(city: self.city)
@@ -85,7 +89,7 @@ struct WeatherView: View {
                    joke = decodedResponse?.value ?? ""
                }
            } label: {
-               Text("Fetch Joke")
+               Text(weatherFetchJoke)
         }
     }
 }

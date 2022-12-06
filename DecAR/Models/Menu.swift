@@ -11,6 +11,8 @@ let menuMapText:LocalizedStringKey = "menuMapText"
 let menuSettingsText:LocalizedStringKey = "menuSettingsText"
 let menuFurnitureText:LocalizedStringKey = "menuFurnitureText"
 let menuListingsText:LocalizedStringKey = "menuListingsText"
+let menuWeather:LocalizedStringKey = "menuWeather"
+
 
 
 struct Menu: View {
@@ -67,7 +69,7 @@ struct Menu: View {
                     Image(systemName: "cloud.sun.rain")
                         .foregroundColor(.gray)
                         .imageScale(.large)
-                    Text("Weather")
+                    Text(menuWeather)
                         .foregroundColor(.gray)
                         .font(.headline)
                 }

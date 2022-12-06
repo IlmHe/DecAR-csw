@@ -11,6 +11,10 @@ import Foundation
 import CoreLocation
 import Combine
 
+let mapNoName = NSLocalizedString("mapNoName", comment: "mapNoName")
+let mapTapped = NSLocalizedString("mapTapped", comment: "mapTapped")
+
+
 
 // Placeholder listings
 let listings = [
@@ -78,9 +82,9 @@ struct MapView: View {
           coordinate: listing.coordinate,
           content: {
             Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
-            Text(listing.name ?? "No name")
+            Text(listing.name ?? mapNoName)
             onTapGesture {
-             print("Tapped on: \(String(describing: listing.name))")
+             print("\(mapTapped) \(String(describing: listing.name))")
              // TODO: Other UI implementations when tapping the annotation.
            }
          })

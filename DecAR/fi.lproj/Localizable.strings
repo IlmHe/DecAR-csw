@@ -24,3 +24,12 @@
 "furnitureFurnitureName" = "Huonekalun nimi";
 "furnitureEnterFurnitureDetails" = "Lisää huonekalun tiedot";
 "furnitureSelectItem" = "Valitse kohde";
+"furniture3dModel" = "3D malli: ";
+"furnitureCategory" = "Kategoria: ";
+"furnitureFurnitureCategory" = "Huonekalu kategoria";
+"furniture3DModel" = "3D mallin nimi";
+"mapNoName" = "Ei nimeä";
+"mapTapped" = "Napautettu: ";
+"weatherSearch" = "Hae";
+"weatherFetchJoke" = "Hae vitsi";
+"menuWeather" = "Sää";
