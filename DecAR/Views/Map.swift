@@ -12,17 +12,17 @@ import CoreLocation
 import Combine
 
 
-struct MapListingObject: Identifiable {
-  var id = UUID()
-  var name: String?
-  var info: String?
-  var addressName: String?
-  @State var coordinate: CLLocationCoordinate2D
+struct ListingObject {
+  var id = UUID().uuidString
+  var name: String = ""
+  var address: String = ""
+  var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
 }
 
 struct MapView: View {
   //var listingObject: ListingObject
-  //@State var coordinateState: CLLocationCoordinate2D
+  @State var newListing: ListingObject = ListingObject()
+  @State var listingList: [ListingObject] = []
   
   @FetchRequest(
     sortDescriptors: [NSSortDescriptor(keyPath: \Listing.clientName, ascending: true)],
@@ -48,6 +48,7 @@ struct MapView: View {
   ]
    */
   
+  /*
   func listingsLoop() -> Void {
     for (listing) in listings{
       getCoordinate(addressString: listing.clientAddress ?? "Rastaspuistontie 3") { geocodedCoordinates, error in
@@ -56,44 +57,93 @@ struct MapView: View {
     }
     return
   }
-  
+   */
   
   var body: some View {
+  /*
+   getCoordinate(addressString: listing.clientAddress ?? "Rastaspuistontie 3",
+      completionHandler: {
+      (geocodedCoordinates: CLLocationCoordinate2D, error) -> CLLocationCoordinate2D in
+      if error === nil {
+        coordinates = geocodedCoordinates
+      }
+   }
+   */
     
     /*
-     getCoordinate(addressString: listing.clientAddress ?? "Rastaspuistontie 3",
-        completionHandler: {
-        (geocodedCoordinates: CLLocationCoordinate2D, error) -> CLLocationCoordinate2D in
-        if error === nil {
-          coordinates = geocodedCoordinates
-        }
-     }
-     */
+    ForEach(listings) { listing in
+      listingList.append(voidCheck(listing))
+    */
     
     ZStack {
-      Map(coordinateRegion: $mapRegion, annotationItems: listings) { listing in
+      Map(coordinateRegion: $mapRegion,
+        annotationItems: listingList)
+        { listing in
         
-        let coordinate = getCoordinate(addressString: listing.clientAddress, completionHandler: <#T##(CLLocationCoordinate2D, NSError?) -> Void#>)
+       // let coordinate: CLLocationCoordinate2D = getCoordinate(addressString: listing.clientAddress)
         
-        MapAnnotation(coordinate: coordinate ?? "Rastaspuistontie 3") {
-          
-          VStack {
-            Circle()
-              .stroke(.red, lineWidth: 4)
-              .frame(width: 30, height: 30)
-            
-              .onTapGesture {
-                print("Tapped on \(String(describing: listing.clientName))")
-                
+          MapAnnotation(
+            coordinate: listing.coordinate,
+            content: {
+              Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
+              Text(listing.name ?? "No name")
+              onTapGesture {
+                print("Tapped on: \(String(describing: listing.name))")
+                // TODO: Other UI implementations when tapping the annotation.
               }
-            Text(listing.clientName ?? "No name")
+            }
+          )
+        }
+    }.onAppear()
+  }
+  
+/*
+    var body: some View {
+      
+      ZStack {
+        Map(coordinateRegion: $mapRegion,
+         annotationItems: listings)
+         { listing in
+           MapAnnotation(
+            coordinate: listing.coordinate,
+            content: {
+              Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
+              Text(listing.name ?? "No name")
+              onTapGesture {
+               print("Tapped on: \(String(describing: listing.name))")
+               // TODO: Other UI implementations when tapping the annotation.
+             }
+           })
           }
         }
       }
-    }
+ */
+  
+  // Checks if the getCoordinate function returned void
+  /*func voidCheck(listing: Listing) -> ListingObject {
+      makeListingObjects(listing: Listing) { listing in
+        guard newListing.coordinate != Void else {
+              return
+          }
+        return newListing
+          //Use `username` here...
+          //...
+      }
   }
+   */
   
+  // Makes object out of fetched core data and creates coordinate out of fetched address
+  func makeListingObjects(listing: Listing) -> ListingObject {
+    newListing.name = listing.clientName ?? ""
+    newListing.address = listing.clientAddress ?? ""
+    newListing.coordinate = getCoordinate(addressString: newListing.address ?? "Mannerheimintie 7") { (coordinate2d, error) in
+      return coordinate2d
+    }
+    return newListing
+  }
+    
   
+   
   // geocoding func 1
   func getCoordinate( addressString : String,
                       completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
@@ -104,7 +154,6 @@ struct MapView: View {
           let location = placemark.location!
           
           completionHandler(location.coordinate, nil)
-          
           return
         }
       }
