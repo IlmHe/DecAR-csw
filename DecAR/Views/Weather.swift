@@ -76,10 +76,31 @@ struct WeatherView: View {
                    self.weatherInfo.fetchWeather(city: self.city)
                }).textFieldStyle(RoundedBorderTextFieldStyle())
            }
-           Text("\(self.weatherInfo.temperature) ℃")
+           //Group {
+               Text("Temperature: \(self.weatherInfo.temperature, specifier: "%.1f") ℃")
+               Text("Feels like: \(self.weatherInfo.feelsLike , specifier: "%.1f") ℃")
+               Text("Humidity: \(self.weatherInfo.humidity, specifier: "%.1f") %")
+             //  Text("Wind speed: \(self.weatherInfo.speed , specifier: "%.1f") m/s")
+             //  Text("Gust speed: \(self.weatherInfo.gust , specifier: "%.1f") m/s")
+             //  Text("Icon \(self.weatherInfo.icon)")
+             //  Text("Description: \(self.weatherInfo.description)")
+              // Text("Main \(self.weatherInfo.main)")
+          // }
+           
+
+           Text(self.weatherInfo.message)
               // .onAppear() {
               //     self.weatherInfo.fetchWeather(city: self.city)
               // }
+           /*
+            let main: String
+            let description: String
+            let icon: String
+        
+            let feels_like: Double
+            let speed: Double
+            let gust: Double
+            */
            
            Text(joke)
            Button {
@@ -98,10 +119,6 @@ struct WeatherView_Previews: PreviewProvider {
     static var previews: some View {
         WeatherView()
     }
-}
-
-struct CuurentWeather: Codable {
-    
 }
 
 struct Joke: Codable {
