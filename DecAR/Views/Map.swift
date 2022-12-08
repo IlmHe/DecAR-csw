@@ -59,6 +59,7 @@ struct MapView: View {
           )
         }
         .onAppear {
+          /*
           var newLocations: Array<ListingObject> = []
           for address in listings {
             /* open esimerkki
@@ -83,27 +84,23 @@ struct MapView: View {
           print("new locations outside: ", newLocations)
           self.locations = newLocations
           print("old locations: ", self.locations)
+          */
           
-          /* Mitä katottiin Juhon kanssa
-          var newLocations: Array<ListingObject> = []
+          //var newLocations: Array<ListingObject> = []
           for address in listings {
-              self.getLocation(from: address.clientAddress ?? "22 Sunset Ave, East Quogue, NY") { coordinates in
+              self.getCoordinate(addressString: address.clientAddress ?? "22 Sunset Ave, East Quogue, NY", completionHandler: { (coordinates, error) in
                 print("address: ", address.clientAddress ?? "Empty address")
                 let newObject = ListingObject(
                   name: address.clientName!,
                   address: address.clientAddress!,
-                  coordinate: coordinates!
+                  coordinate: coordinates
                 )
                 print("newObject: ", newObject)
-                newLocations.append(newObject)
+                self.locations.append(newObject)
               }
-          }
-          self.locations = newLocations
-          /*
-          print("new locations: ", newLocations)
-          print("old locations: ", self.locations)
-           */
-           */
+          )}
+          print("First: ", self.$locations.first?.coordinate)
+          print("All locations: ", self.$locations)
         }
     }
   
@@ -132,12 +129,11 @@ struct MapView: View {
               if error == nil {
                   if let placemark = placemarks?[0] {
                       let location = placemark.location!
-                          
+                    
                       completionHandler(location.coordinate, nil)
                       return
                   }
               }
-                  
               completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
           }
       }
