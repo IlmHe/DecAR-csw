@@ -11,115 +11,119 @@ import Foundation
 import CoreLocation
 import Combine
 
+// TODO: Set the users current location as the initial location.
+// TODO: Function which draws route to chosen annotation.
+// TODO: Info bubbles for annotations when tapped.
+// TODO: Button inside the info bubble to draw the route.
+// TODO: UI changes for each team.
 
-// Placeholder listings
-let listings = [
-  MapListingObject(
-    name: "Listing 1",
-    addressName: "Yrjönkatu",
-    coordinate: CLLocationCoordinate2D(latitude: 60.16746134802547, longitude: 24.93970899959051)),
-  MapListingObject(
-    name: "Listing 2",
-    addressName: "Iskoskuja 3b",
-    coordinate: CLLocationCoordinate2D(latitude: 60.26103259739199, longitude: 24.854346179663626)),
-  MapListingObject(
-    name: "Listing 3",
-    addressName: "Mannerheimintie",
-    coordinate: CLLocationCoordinate2D(latitude: 60.16762883994775, longitude: 24.9414360241139)),
-  MapListingObject(
-    name: "Listing 4",
-    addressName: "Kalevankatu",
-    coordinate: CLLocationCoordinate2D(latitude: 60.1671440962688, longitude: 24.937641323263826)),
-  MapListingObject(
-    name: "Listing 5",
-    addressName: "Yrjönkatu",
-    coordinate: CLLocationCoordinate2D(latitude: 60.16834348288605, longitude: 24.93722274756878)),
-  MapListingObject(
-    name: "Listing 6",
-    addressName: "Simonkatu",
-    coordinate: CLLocationCoordinate2D(latitude: 60.169115888388546, longitude: 24.936644432016113)),
-  MapListingObject(
-    name: "Listing 7",
-    addressName: "Kaivokatu",
-    coordinate: CLLocationCoordinate2D(latitude: 60.170160183289305, longitude: 24.938878472998844)),
-  MapListingObject(
-    name: "Listing 8",
-    addressName: "Postikuja",
-    coordinate: CLLocationCoordinate2D(latitude: 60.17153938982138, longitude: 24.937397034438387)),
-  MapListingObject(
-    name: "Listing 9",
-    addressName: "Töölönlahdenkatu",
-    coordinate: CLLocationCoordinate2D(latitude: 60.172628922037795, longitude: 24.938565548775284)),
-  MapListingObject(
-    name: "Listing 10",
-    addressName: "Kaisaniemenkatu",
-    coordinate: CLLocationCoordinate2D(latitude: 60.171252738559694, longitude: 24.94724923230181)),
-]
+/**
+ * ListingObject class
+ * ListingObject can be given the values of a listing with added value coordinates.
+ *
+ * Main function.
+ * @State var locations is used to capture all of the locations as ListingObject object.
+ *  private var listings holds all of the fetched listings from the Core Data.
+ * @State private var mapRegion holds predefined initial location as well as initial zoom distance.
+ *
+ * body
+ * body contains MapKit map.
+ * Annotations are drawn on the map and different types of UI stuff are done in it.
+ *
+ * .onAppear
+ * Inside the maps .onAppear function is a for loop which loops through all of the fetched listings.
+ * In every loop a geocoding function as well as completionHandler are called and given an address string from the current listing.
+ * After the address has been forward geocoded it is captured in a newObject object which gets has the variables of ListingObject.
+ * Finally the newObject is appended in the locations @State variable list which is used to draw the annotation to the map when the for loop is done.
+ *
+ * getCoordinate() function
+ * getCoordinate() function geocodes given address string to coordinates of type CLLocationCoordinate2D and passes them to completionHandler which returns the coordinates asynchronously as well as error message which can be nil.
+ * The function itself returns Void because it isn't asynchronous.
+ *
+ *
+ * Note: To use completionHandler, you must give it the to be return value inside a function which returns Void. Then you call the function somewhere, give it some value and catch the return value as well as the error message from the completionHandler inside the function call.
+ */
 
-struct MapListingObject: Identifiable {
-  var id = UUID()
-  var name: String?
-  var addressName: String?
-  @State var coordinate: CLLocationCoordinate2D
+// Used to hold listing data.
+class ListingObject: Identifiable {
+  var id = UUID().uuidString
+  var name: String = ""
+  var address: String = ""
+  var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+  
+  init(name: String, address: String, coordinate: CLLocationCoordinate2D) {
+    self.name = name
+    self.address = address
+    self.coordinate = coordinate
+  }
 }
 
 struct MapView: View {
+  //@State var location: CLLocationCoordinate2D?
+  @State var locations: Array<ListingObject> = []
   
-  // Sets the initial location to Helsinki and initial zoom distance to 0.5.
-  @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.16952, longitude: 24.93545), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
-  
-  var body: some View {
+  // Fetches listings from the Core Data.
+  @FetchRequest(
+    sortDescriptors: [NSSortDescriptor(keyPath: \Listing.clientName, ascending: true)],
+    animation: .default)
     
-    ZStack {
-      Map(coordinateRegion: $mapRegion,
-       annotationItems: listings)
-       { listing in
-         MapAnnotation(
-          coordinate: listing.coordinate,
-          content: {
-            Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
-            Text(listing.name ?? "No name")
-            onTapGesture {
-             print("Tapped on: \(String(describing: listing.name))")
-             // TODO: Other UI implementations when tapping the annotation.
-           }
-         })
+  // Holds all of the listing objects.
+  private var listings: FetchedResults<Listing>
+  
+  // Sets initial location and zoom distance.
+  @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.16952, longitude: 24.93545), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+    
+  var body: some View {
+    // Map which shows all of the listings locations as pins.
+    Map(coordinateRegion: $mapRegion, annotationItems: self.locations) { location in
+      MapAnnotation(
+        coordinate: location.coordinate,
+        content: {
+          Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
+          Text(location.name)
+          onTapGesture {
+            print("Tapped on: \(String(describing: location.name))")
+          }
+        }
+      )
+    }
+    /*
+     * Loops through all of the listings.
+     * Calls the geocoder function which forward geocodes the given address string with completionHandler.
+     * Makes a new object of type ListingObject and appends it to the locations @State variable list.
+     * Returns the list of locations to Map function.
+    */
+    .onAppear {
+      for address in listings {
+        self.getCoordinate(addressString: address.clientAddress ?? "22 Sunset Ave, East Quogue, NY", completionHandler: { (coordinates, error) in
+          let newObject = ListingObject(
+            name: address.clientName!,
+            address: address.clientAddress!,
+            coordinate: coordinates
+          )
+          self.locations.append(newObject)
+        })
+      }
+    }
+  }
+  
+  /*
+   * Needs to be given address string which this function geocodes to coordinates.
+   * Gives coordinates to completionHandler.
+   * completionHandler needs to be called inside the function call of this function to retrieve the geocoded coordinates as well as error message which can be nil.
+   * Returns Void value.
+  */
+  func getCoordinate( addressString : String, completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
+  let geocoder = CLGeocoder()
+    geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+      if error == nil {
+        if let placemark = placemarks?[0] {
+          let location = placemark.location!
+                    
+          completionHandler(location.coordinate, nil)
+          return
         }
       }
     }
   }
-//}
- 
-/*
-   extension MapView: MKMapViewDelegate {
-   
-   /**
-    *This function launches Maps app and shows driving directions from user's current location to location which was tapped.
-    * -----------------------------------------
-    *1. When user taps the 'info' button on listings description iOS calls mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped...)
-    *2. You check something like if there is a location in the Listing object which was tapped on the guard function if not it returns NIL I guess.
-    *3. You grab the Listing object and launch Maps app by creating an associated MKMapItem and calling openInMaps(launchOptions:) on the map item.
-    *Notice that you create launchOptions variable in which you define the Maps app to show directions in driving mode.
-    *You use this launchOptions variable when launching the Maps app.
-    */
-   func mapView(
-   // 1
-   _ mapView: MKMapView,
-   annotationView view: MKAnnotationView,
-   calloutAccessoryControlTapped control: UIControl
-   ) {
-   // 2
-   guard let listingObject = view.annotation as? MapListingObject else {
-   return
-   }
-   
-   // 3
-   let launchOptions = [
-   MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
-   ]
-   listingObject.addressName?.openInMaps(launchOptions: launchOptions)
-   }
-   }
-   
-   
-   */
+}

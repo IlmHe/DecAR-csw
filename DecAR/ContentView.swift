@@ -204,7 +204,7 @@ extension ARView: ARCoachingOverlayViewDelegate {
     //Setup AR config
     func setupConfiguration() {
                         
-        self.automaticallyConfigureSession = true
+        //self.automaticallyConfigureSession = true
         
         let config = ARWorldTrackingConfiguration()
         config.planeDetection = [.horizontal, .vertical]
