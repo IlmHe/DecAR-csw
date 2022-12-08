@@ -11,6 +11,149 @@ import Foundation
 import CoreLocation
 import Combine
 
+class ListingObject: Identifiable {
+  var id = UUID().uuidString
+  var name: String = ""
+  var address: String = ""
+  var coordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+  
+  init(name: String, address: String, coordinate: CLLocationCoordinate2D) {
+    self.name = name
+    self.address = address
+    self.coordinate = coordinate
+  }
+}
+
+struct MapView: View {
+  @State var location: CLLocationCoordinate2D?
+  @State var locations: Array<ListingObject> = []
+  @State private var hasTimeElapsed = false
+  
+  @FetchRequest(
+    sortDescriptors: [NSSortDescriptor(keyPath: \Listing.clientName, ascending: true)],
+    animation: .default)
+    
+  // Holds all of the listing objects.
+  private var listings: FetchedResults<Listing>
+  
+  @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.16952, longitude: 24.93545), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+  
+  /* TODO: Only problem right now is appending the newObject to newLocations.
+   * For some reason it doesn't append even if there is no errors.
+   * Maybe check whats inside the returned coord2d from geocoder function
+   */
+    var body: some View {
+      Map(coordinateRegion: $mapRegion,
+          annotationItems: self.locations)
+        { location in
+          MapAnnotation(
+            coordinate: location.coordinate,
+            content: {
+              Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
+              Text(location.name)
+              onTapGesture {
+                print("Tapped on: \(String(describing: location.name))")
+                // TODO: Other UI implementations when tapping the annotation.
+              }
+            }
+          )
+        }
+        .onAppear {
+          var newLocations: Array<ListingObject> = []
+          for address in listings {
+            /* open esimerkki
+             getCoordinate(addressString: "Karaportti 2, Espoo") { (coord2d, error) in
+                         print("coord2d \(coord2d)")
+                     }
+             */
+              self.getCoordinate(addressString: address.clientAddress ?? "22 Sunset Ave, East Quogue, NY") { (coordinates, error) in
+                let newObject = ListingObject(
+                  name: address.clientName!,
+                  address: address.clientAddress!,
+                  coordinate: coordinates
+                )
+                print("newObject coords: ", newObject.coordinate)
+                newLocations.append(newObject)
+                print("new locations inside: ", newLocations)
+              }
+            print("new locations middle: ", newLocations)
+          }
+          //Task { await delay() }
+          print("First object in newLocations: ", newLocations.first ?? "Nothing in the array")
+          print("new locations outside: ", newLocations)
+          self.locations = newLocations
+          print("old locations: ", self.locations)
+          
+          /* Mitä katottiin Juhon kanssa
+          var newLocations: Array<ListingObject> = []
+          for address in listings {
+              self.getLocation(from: address.clientAddress ?? "22 Sunset Ave, East Quogue, NY") { coordinates in
+                print("address: ", address.clientAddress ?? "Empty address")
+                let newObject = ListingObject(
+                  name: address.clientName!,
+                  address: address.clientAddress!,
+                  coordinate: coordinates!
+                )
+                print("newObject: ", newObject)
+                newLocations.append(newObject)
+              }
+          }
+          self.locations = newLocations
+          /*
+          print("new locations: ", newLocations)
+          print("old locations: ", self.locations)
+           */
+           */
+        }
+    }
+  
+    private func delay() async {
+        // Delay of 7.5 seconds (1 second = 1_000_000_000 nanoseconds)
+        try? await Task.sleep(nanoseconds: 10_000_000_000)
+        hasTimeElapsed = true
+    }
+
+    func getLocation(from address: String, completion: @escaping (_ location: CLLocationCoordinate2D?)-> Void) {
+        let geocoder = CLGeocoder()
+        geocoder.geocodeAddressString(address) { (placemarks, error) in
+            guard let placemarks = placemarks,
+            let location = placemarks.first?.location?.coordinate else {
+                completion(nil)
+                return
+            }
+            completion(location)
+        }
+    }
+  
+  func getCoordinate( addressString : String,
+              completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
+          let geocoder = CLGeocoder()
+          geocoder.geocodeAddressString(addressString) { (placemarks, error) in
+              if error == nil {
+                  if let placemark = placemarks?[0] {
+                      let location = placemark.location!
+                          
+                      completionHandler(location.coordinate, nil)
+                      return
+                  }
+              }
+                  
+              completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
+          }
+      }
+}
+
+
+/*
+ Old stuff
+----------------------------------------------------
+
+import MapKit
+import SwiftUI
+import Foundation
+import CoreLocation
+import Combine
+
 
 struct ListingObject {
   var id = UUID().uuidString
@@ -94,7 +237,11 @@ struct MapView: View {
             }
           )
         }
-    }.onAppear()
+    }.onAppear(
+      perform: getCoordinate(addressString: "Karaportti 2, Espoo") { (coord2d, error) in
+                  print("coord2d (coord2d)")
+              }
+    )
   }
   
 /*
@@ -133,7 +280,8 @@ struct MapView: View {
    */
   
   // Makes object out of fetched core data and creates coordinate out of fetched address
-  func makeListingObjects(listing: Listing) -> ListingObject {
+  /*
+   func makeListingObjects(listing: Listing) -> ListingObject {
     newListing.name = listing.clientName ?? ""
     newListing.address = listing.clientAddress ?? ""
     newListing.coordinate = getCoordinate(addressString: newListing.address ?? "Mannerheimintie 7") { (coordinate2d, error) in
@@ -141,9 +289,22 @@ struct MapView: View {
     }
     return newListing
   }
+   */
     
   
-   
+  func getLocation(from address: String, completion: @escaping (_ location: CLLocationCoordinate2D?)-> Void) {
+          let geocoder = CLGeocoder()
+          geocoder.geocodeAddressString(address) { (placemarks, error) in
+              guard let placemarks = placemarks,
+              let location = placemarks.first?.location?.coordinate else {
+                  completion(nil)
+                  return
+              }
+              completion(location)
+          }
+      }
+  
+  
   // geocoding func 1
   func getCoordinate( addressString : String,
                       completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
@@ -331,5 +492,4 @@ struct MapView: View {
    }
    }
    
-   
-   */
+   */*/

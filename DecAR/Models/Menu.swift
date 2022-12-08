@@ -6,6 +6,10 @@
 //
 
 import SwiftUI
+import MapKit
+import Foundation
+import CoreLocation
+import Combine
 
 let menuMapText:LocalizedStringKey = "menuMapText"
 let menuSettingsText:LocalizedStringKey = "menuSettingsText"
@@ -18,7 +22,7 @@ struct Menu: View {
         VStack(alignment: .leading) {
             HStack {
 
-                NavigationLink(destination: MapView()) {
+              NavigationLink(destination: MapView()) {
                     Image(systemName: "map")
                         .foregroundColor(.gray)
                         .imageScale(.large)
