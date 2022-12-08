@@ -80,9 +80,6 @@ struct ListingsView: View {
         }
     }
 
-    // For checking simulator data location
-    //print("app folder path is \(NSHomeDirectory())")
-    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map { listings[$0] }.forEach(viewContext.delete)
@@ -101,54 +98,3 @@ struct ListingsView_Previews: PreviewProvider {
         ContentView(currentObject: .constant(SelectedFurniture("stool"))).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
-
-/*
-struct Previews_Listings_Previews: PreviewProvider {
-    static var previews: some View {
-        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
-    }
-}
- 
- 
- Button(listingsAddBtn) {
- presentAlert = true
-}
-.alert(listingsAlertAddListing, isPresented: $presentAlert, actions: {
- TextField(listingsClientName2, text: $clientName)
- TextField(listingsClientAddress2, text: $clientAddress)
-
- Button(listingsAddBtn, action: {
-     let newListing = Listing(context: viewContext)
-     newListing.clientName = clientName
-     newListing.clientAddress = clientAddress
-     do {
-         try viewContext.save()
-     } catch {
-         let nsError = error as NSError
-         fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-     }
- })
- Button(listingsBtnCancel, role: .cancel, action: {})
-}, message: {
- Text(listingsDetails)
-})
- 
- TextField(listingsClientName2, text: $clientName)
- TextField(listingsClientAddress2, text: $clientAddress)
-
- Button(listingsAddBtn, action: {
-     let newListing = Listing(context: viewContext)
-     newListing.clientName = clientName
-     newListing.clientAddress = clientAddress
-     do {
-         try viewContext.save()
-     } catch {
-         let nsError = error as NSError
-         fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-     }
- })
- Button(listingsBtnCancel, role: .cancel, action: {})
-}, message: {
- Text(listingsDetails)
-}
-*/

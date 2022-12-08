@@ -26,7 +26,6 @@ struct FurnitureCollectionView: View {
     @State private var furnitureName: String = ""
     @State private var modelName: String = ""
     @State private var category: String = ""
-    //@State private var furnitureCategory: String = ""
     
     @Environment(\.managedObjectContext) private var viewContext
 
@@ -87,9 +86,6 @@ struct FurnitureCollectionView: View {
         }
     }
 
-    // For checking simulator data location
-    //print("app folder path is \(NSHomeDirectory())")
-    
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map { furnitures[$0] }.forEach(viewContext.delete)
@@ -108,28 +104,3 @@ struct FurnitureCollectionView_Previews: PreviewProvider {
         ContentView(currentObject: .constant(SelectedFurniture("stool"))).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
-
-/*
- .alert(furnitureAlertAddFurniture, isPresented: $presentAlert, actions: {
-     TextField(furnitureFurnitureName, text: $furnitureName)
-     TextField("Furniture category", text: $category)
-     TextField("3D model name", text: $modelName)
-
-     Button(furnitureAddBtn, action: {
-         let newFurniture = Furniture(context: viewContext)
-         newFurniture.furnitureName = furnitureName
-         newFurniture.category = category
-         newFurniture.modelName = modelName
-
-         do {
-             try viewContext.save()
-         } catch {
-             let nsError = error as NSError
-             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-         }
-     })
-     Button(furnitureCancelBtn, role: .cancel, action: {})
- }, message: {
-     Text(furnitureEnterFurnitureDetails)
- })
- */

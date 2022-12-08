@@ -72,7 +72,6 @@ struct MapView: View {
   
   // Sets initial location and zoom distance.
   @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.16952, longitude: 24.93545), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-  
     
   var body: some View {
     // Map which shows all of the listings locations as pins.
@@ -88,12 +87,12 @@ struct MapView: View {
         }
       )
     }
-      /*
-       * Loops through all of the listings.
-       * Calls the geocoder function which forward geocodes the given address string with completionHandler.
-       * Makes a new object of type ListingObject and appends it to the locations @State variable list.
-       * Returns the list of locations to Map function.
-       */
+    /*
+     * Loops through all of the listings.
+     * Calls the geocoder function which forward geocodes the given address string with completionHandler.
+     * Makes a new object of type ListingObject and appends it to the locations @State variable list.
+     * Returns the list of locations to Map function.
+    */
     .onAppear {
       for address in listings {
         self.getCoordinate(addressString: address.clientAddress ?? "22 Sunset Ave, East Quogue, NY", completionHandler: { (coordinates, error) in
@@ -108,12 +107,12 @@ struct MapView: View {
     }
   }
   
-/*
- * Needs to be given address string which this function geocodes to coordinates.
- * Gives coordinates to completionHandler.
- * completionHandler needs to be called inside the function call of this function to retrieve the geocoded coordinates as well as error message which can be nil.
- * Returns Void value.
-*/
+  /*
+   * Needs to be given address string which this function geocodes to coordinates.
+   * Gives coordinates to completionHandler.
+   * completionHandler needs to be called inside the function call of this function to retrieve the geocoded coordinates as well as error message which can be nil.
+   * Returns Void value.
+  */
   func getCoordinate( addressString : String, completionHandler: @escaping(CLLocationCoordinate2D, NSError?) -> Void ) {
   let geocoder = CLGeocoder()
     geocoder.geocodeAddressString(addressString) { (placemarks, error) in
@@ -125,7 +124,6 @@ struct MapView: View {
           return
         }
       }
-      completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
     }
   }
 }

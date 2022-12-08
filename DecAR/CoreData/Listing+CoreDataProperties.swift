@@ -16,7 +16,6 @@ extension Listing {
     
     @NSManaged public var clientName: String?
     @NSManaged public var clientAddress: String?
-    @NSManaged public var clientFurniture: Furniture?
 }
 
 extension Listing : Identifiable {
