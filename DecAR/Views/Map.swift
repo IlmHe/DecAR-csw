@@ -89,6 +89,7 @@ struct MapView: View {
         content: {
           Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
           Text(location.name)
+            .accessibilityLabel(mapTapped)
           onTapGesture {
             print("\(mapTapped) \(String(describing: location.name))")
           }

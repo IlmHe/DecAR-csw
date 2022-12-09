@@ -36,3 +36,11 @@
 "menuLabel" = "Menu";
 "settingsLabel" = "Settings";
 "furnitureMenuLabel" = "Furniture menu";
+"weatherLanguage" = "en";
+"currentWeather" = "Current weather";
+"Temperature" = "Temperature";
+"feelsLike" = "Feels like: ";
+"Humidity" = "Humidity: ";
+"windSpeed" = "Wind speed: ";
+"Description" = "Description: ";
+"Main" = "Main";

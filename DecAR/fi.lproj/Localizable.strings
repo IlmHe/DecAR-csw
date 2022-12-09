@@ -36,3 +36,11 @@
 "menuLabel" = "Valikko";
 "settingsLabel" = "Asetukset";
 "furnitureMenuLabel" = "Huonekaluvalikko";
+"weatherLanguage" = "fi";
+"currentWeather" = "Nykyinen sää";
+"Temperature" = "Asteet";
+"feelsLike" = "Tuntuu: ";
+"Humidity" = "Kosteus: ";
+"windSpeed" = "Ilman nopeus: ";
+"Description" = "Kuvaus: ";
+"Main" = "Pää";

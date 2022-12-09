@@ -12,6 +12,16 @@ import Combine
 
 let weatherSearch = NSLocalizedString("weatherSearch", comment: "weatherSearch")
 let weatherFetchJoke = NSLocalizedString("weatherFetchJoke", comment: "weatherFetchJoke")
+let language = NSLocalizedString("weatherLanguage", comment: "weatherLanguage")
+let currentWeather = NSLocalizedString("currentWeather", comment: "currentWeather")
+let Temperature = NSLocalizedString("Temperature", comment: "Temperature")
+let feelsLike = NSLocalizedString("feelsLike", comment: "feelsLike")
+let Humidity = NSLocalizedString("Humidity", comment: "Humidity")
+let windSpeed = NSLocalizedString("windSpeed", comment: "windSpeed")
+let Description = NSLocalizedString("Description", comment: "Description")
+let Main = NSLocalizedString("Main", comment: "Main")
+
+
 
 enum NetwokrError: Error {
     case decodingError
@@ -22,7 +32,6 @@ enum NetwokrError: Error {
 class GetWeather {
     
     @State private var apiKey = ""
-    @State private var language: String = "en"
     
     func urlWeather(_ city: String) -> URL? {
         guard let url = URL(string:
@@ -110,7 +119,7 @@ struct WeatherView: View {
        var body: some View {
            
            VStack {
-               Text("Current weather")
+               Text(currentWeather)
                    .font(.title)
                    .padding(.horizontal)
                HStack {
@@ -151,7 +160,8 @@ struct WeatherView: View {
                            VStack {
                            Text("\(self.weatherInfo.temperature, specifier: "%.1f") ℃")
                                    .font(.largeTitle)
-                           Text("Temperature")
+                               Text(Temperature)                                .accessibilityLabel(Temperature)
+
                        }
                        }
                        .padding()
@@ -164,42 +174,47 @@ struct WeatherView: View {
                Spacer()
                Group {
                    VStack {
-                       Text("Feels like: \(self.weatherInfo.feelsLike , specifier: "%.1f") ℃")
+                       Text("\(feelsLike) \(self.weatherInfo.feelsLike , specifier: "%.1f") ℃")
                            .font(.title2)
                            .padding()
                                .overlay(
                                    RoundedRectangle(cornerRadius: 16)
                                        .stroke(.blue, lineWidth: 2)
                                )
-                       Text("Humidity: \(self.weatherInfo.humidity, specifier: "%.1f") %")
+                               .accessibilityLabel(feelsLike)
+                       Text("\(Humidity) \(self.weatherInfo.humidity, specifier: "%.1f") %")
                            .font(.title2)
                            .padding()
                                .overlay(
                                    RoundedRectangle(cornerRadius: 16)
                                        .stroke(.blue, lineWidth: 2)
                                )
-                       Text("Wind speed: \(self.weatherInfo.speed , specifier: "%.1f") m/s")
+                               .accessibilityLabel(Humidity)
+                       Text("\(windSpeed) \(self.weatherInfo.speed , specifier: "%.1f") m/s")
                            .font(.title2)
                            .padding()
                                .overlay(
                                    RoundedRectangle(cornerRadius: 16)
                                        .stroke(.blue, lineWidth: 2)
                                )
+                               .accessibilityLabel(windSpeed)
                        //  Text("Icon \(self.weatherInfo.icon)")
-                       Text("Description: \(self.weatherInfo.description)")
+                       Text("\(Description) \(self.weatherInfo.description)")
                            .font(.title2)
                            .padding()
                                .overlay(
                                    RoundedRectangle(cornerRadius: 16)
                                        .stroke(.blue, lineWidth: 2)
                                )
-                       Text("Main \(self.weatherInfo.main)")
+                               .accessibilityLabel(Description)
+                       Text("\(Main) \(self.weatherInfo.main)")
                            .font(.title2)
                            .padding()
                                .overlay(
                                    RoundedRectangle(cornerRadius: 16)
                                        .stroke(.blue, lineWidth: 4)
                                )
+                               .accessibilityLabel(Main)
                        Text(self.weatherInfo.message)
                        //  Text("https://openweathermap.org/img/wn/\(self.weatherInfo.icon)@2x.png")
                    }
@@ -210,6 +225,7 @@ struct WeatherView: View {
            Text(joke)
                .padding(2)
                .font(.title3)
+               .accessibilityLabel(joke)
            Button {
                Task {
                    let (data, _) = try await URLSession.shared.data(from: URL(string:"https://api.chucknorris.io/jokes/random")!)
@@ -218,6 +234,7 @@ struct WeatherView: View {
                }
            } label: {
                Text(weatherFetchJoke)
+                   .accessibilityLabel(weatherFetchJoke)
         }
            Spacer()
     }
