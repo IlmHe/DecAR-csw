@@ -33,3 +33,6 @@
 "weatherSearch" = "Hae";
 "weatherFetchJoke" = "Hae vitsi";
 "menuWeather" = "Sää";
+"menuLabel" = "Valikko";
+"settingsLabel" = "Asetukset";
+"furnitureMenuLabel" = "Huonekaluvalikko";

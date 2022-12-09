@@ -25,8 +25,9 @@ struct Menu: View {
                         .foregroundColor(.gray)
                         .imageScale(.large)
                     Text(menuMapText)
-                            .foregroundColor(.gray)
-                            .font(.headline)
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                        .accessibilityLabel(menuMapText)
                 }
             }
             .padding(.top, 100)
@@ -39,6 +40,7 @@ struct Menu: View {
                     Text(menuSettingsText)
                         .foregroundColor(.gray)
                         .font(.headline)
+                        .accessibilityLabel(menuSettingsText)
                 }
             }
             .padding(.top, 30)
@@ -50,6 +52,7 @@ struct Menu: View {
                     Text(menuFurnitureText)
                         .foregroundColor(.gray)
                         .font(.headline)
+                        .accessibilityLabel(menuFurnitureText)
                 }
             }
             .padding(.top, 30)
@@ -61,6 +64,7 @@ struct Menu: View {
                     Text(menuListingsText)
                         .foregroundColor(.gray)
                         .font(.headline)
+                        .accessibilityLabel(menuListingsText)
                 }
             }
             .padding(.top, 30)
@@ -72,6 +76,7 @@ struct Menu: View {
                     Text(menuWeather)
                         .foregroundColor(.gray)
                         .font(.headline)
+                        .accessibilityLabel(menuWeather)
                 }
             }
             .padding(.top, 30)

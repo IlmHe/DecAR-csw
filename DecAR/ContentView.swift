@@ -11,6 +11,11 @@ import RealityKit
 import ARKit
 import SceneKit
 
+let menuLabel = NSLocalizedString("menuLabel", comment: "menuLabel")
+let settingsLabel = NSLocalizedString("settingsLabel", comment: "settingsLabel")
+let furnituremenuLabel = NSLocalizedString("furnitureMenuLabel", comment: "furnitureMenuLabel")
+
+
 
 struct ContentView : View {
     @State var showMenu = false
@@ -47,7 +52,7 @@ struct ContentView : View {
                                     .edgesIgnoringSafeArea(.all)
                                 
                                 if self.showMenu {
-                                    Menu()
+                                    Menu() 
                                         .frame(width: geometry.size.width/2)
                                         .transition(.move(edge: .leading))
                                 }
@@ -85,6 +90,7 @@ struct ContentView : View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
+                                .accessibilityLabel(menuLabel)
                             }
                         }
 
@@ -107,6 +113,7 @@ struct ContentView : View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
+                                .accessibilityLabel(settingsLabel)
                             }
                         }
                         
@@ -124,6 +131,8 @@ struct ContentView : View {
                                 .sheet(isPresented: $showingDetail) {
                                     FurnitureMenu(isPresented: $showingDetail)
                                 }
+                                .accessibilityLabel(furnituremenuLabel)
+
                             }
                         }
                            
@@ -425,19 +434,19 @@ struct ARViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
         
-        arView.currentModelName = arView.makePeace()
+        //arView.currentModelName = arView.makePeace()
 
-        arView.setupConfiguration()
+        //arView.setupConfiguration()
         
-        arView.addCoaching()
+        //arView.addCoaching()
         
-        arView.enableObjectAdd()
+        //arView.enableObjectAdd()
 
-        arView.enableObjectRemoval()
+        //arView.enableObjectRemoval()
       
-        arView.enableWorldPersistance()
+        //arView.enableWorldPersistance()
         
-        arView.enableWorldLoad()
+        //arView.enableWorldLoad()
         
         return arView
 

@@ -33,3 +33,6 @@
 "weatherSearch" = "Search";
 "weatherFetchJoke" = "Fetch joke";
 "menuWeather" = "Weather";
+"menuLabel" = "Menu";
+"settingsLabel" = "Settings";
+"furnitureMenuLabel" = "Furniture menu";
