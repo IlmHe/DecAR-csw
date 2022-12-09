@@ -11,7 +11,6 @@ import Foundation
 import CoreLocation
 import Combine
 
-let mapNoName = NSLocalizedString("mapNoName", comment: "mapNoName")
 let mapTapped = NSLocalizedString("mapTapped", comment: "mapTapped")
 
 // TODO: Set the users current location as the initial location.
@@ -84,7 +83,6 @@ struct MapView: View {
         content: {
           Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
           Text(location.name)
-          Text(location.name ?? mapNoName)
           onTapGesture {
             print("\(mapTapped) \(String(describing: location.name))")
           }

@@ -6,10 +6,6 @@
 //
 
 import SwiftUI
-import MapKit
-import Foundation
-import CoreLocation
-import Combine
 
 let menuMapText:LocalizedStringKey = "menuMapText"
 let menuSettingsText:LocalizedStringKey = "menuSettingsText"
