@@ -59,8 +59,9 @@ class ListingObject: Identifiable {
 }
 
 struct MapView: View {
-  //@State var location: CLLocationCoordinate2D?
   @State var locations: Array<ListingObject> = []
+  @StateObject var locationManager = LocationManager()
+  @State var tracking: MapUserTrackingMode = .follow
   
   // Fetches listings from the Core Data.
   @FetchRequest(
@@ -75,7 +76,12 @@ struct MapView: View {
     
   var body: some View {
     // Map which shows all of the listings locations as pins.
-    Map(coordinateRegion: $mapRegion, annotationItems: self.locations) { location in
+    Map(
+      coordinateRegion: $locationManager.region,
+      interactionModes: MapInteractionModes.all,
+      showsUserLocation: true,
+      userTrackingMode: $tracking,
+      annotationItems: self.locations) { location in
       MapAnnotation(
         coordinate: location.coordinate,
         content: {
@@ -94,6 +100,10 @@ struct MapView: View {
      * Returns the list of locations to Map function.
     */
     .onAppear {
+      self.mapRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(/* current coords */),
+        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+      
       for address in listings {
         self.getCoordinate(addressString: address.clientAddress ?? "22 Sunset Ave, East Quogue, NY", completionHandler: { (coordinates, error) in
           let newObject = ListingObject(
@@ -124,6 +134,34 @@ struct MapView: View {
           return
         }
       }
+    }
+  }
+}
+
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+  let manager = CLLocationManager()
+  @Published var location: CLLocationCoordinate2D?
+  @Published var region = MKCoordinateRegion()
+
+  override init() {
+    super.init()
+    manager.delegate = self
+    manager.desiredAccuracy = kCLLocationAccuracyBest
+    manager.requestWhenInUseAuthorization()
+    manager.startUpdatingLocation()
+  }
+
+  func requestLocation() {
+    manager.requestLocation()
+  }
+
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    //location = locations.first?.coordinate
+    locations.last.map {
+      region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude),
+        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+      )
     }
   }
 }
