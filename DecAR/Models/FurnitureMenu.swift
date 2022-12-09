@@ -15,7 +15,6 @@ class SelectedFurniture: Codable {
     init(_ modelName: String) {
         self.modelName = modelName
     }
-    
 }
 
 // Struct to store one category's data
@@ -31,7 +30,6 @@ struct FurnitureCategoriesRow: View {
     var body: some View {
        
             Text("\(category.categoryName)")
-        
     }
 }
 
@@ -43,7 +41,7 @@ struct FurnitureMenu: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     let furnitureCategories = [Category(categoryName: "Chairs"), Category(categoryName: "Couches"), Category(categoryName: "Stools"), Category(categoryName: "Beds"), Category(categoryName: "Paintings"), Category(categoryName: "Lamps"),
-                                                                                                                                                                                                Category(categoryName: "Desks"), Category(categoryName: "Flower"), Category(categoryName: "Sculptures"), Category(categoryName: "Stands"), Category(categoryName: "Shelves"), Category(categoryName: "Carpet"), Category(categoryName: "Vases"), Category(categoryName: "Tableset"), Category(categoryName: "Mirrors"), Category(categoryName: "Tables"), Category(categoryName: "Plants"), Category(categoryName: "Wardrobes"), Category(categoryName: "Sets"), Category(categoryName: "Televisions"), Category(categoryName: "Pianos")]
+                                                                                                                                                                                Category(categoryName: "Desks"), Category(categoryName: "Flower"), Category(categoryName: "Sculptures"), Category(categoryName: "Stands"), Category(categoryName: "Shelves"), Category(categoryName: "Carpet"), Category(categoryName: "Vases"), Category(categoryName: "Tableset"), Category(categoryName: "Mirrors"), Category(categoryName: "Tables"), Category(categoryName: "Plants"), Category(categoryName: "Wardrobes"), Category(categoryName: "Sets"), Category(categoryName: "Televisions"), Category(categoryName: "Pianos")]
 
     @Binding var isPresented: Bool
     
@@ -73,11 +71,8 @@ struct FurnitureMenu: View {
             Text("Furniture categories")
             NavigationView {
                 List {
-                    
                     ForEach(furnitureCategories) {category in
                         NavigationLink {
-                            
-
                             List {
                             ForEach(furnitures) { furniture in
                                 if("\(category.categoryName)"  == String?(furniture.category ?? "Chairs")!) {
@@ -98,21 +93,6 @@ struct FurnitureMenu: View {
                     }
                 }
             }
-            /*
-            List {
-                ForEach(furnitures) { furniture in
-                    Button(furniture.furnitureName!, action: {
-                        currentObject = SelectedFurniture( furniture.modelName!)
-                        
-                        let appFurniture = UserDefaults.standard
-                        appFurniture.set(furniture.modelName, forKey: "AppCurrentObject")
-     
-                         isPresented = false
-                    })
-                }
-                    
-            }*/
-                
             Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -123,3 +103,18 @@ struct FurnitureMenu: View {
         .edgesIgnoringSafeArea(.all)
     }
 }
+
+/*
+List {
+    ForEach(furnitures) { furniture in
+        Button(furniture.furnitureName!, action: {
+            currentObject = SelectedFurniture( furniture.modelName!)
+            
+            let appFurniture = UserDefaults.standard
+            appFurniture.set(furniture.modelName, forKey: "AppCurrentObject")
+
+             isPresented = false
+        })
+    }
+        
+}*/
