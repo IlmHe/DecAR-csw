@@ -15,6 +15,8 @@ let menuMapText:LocalizedStringKey = "menuMapText"
 let menuSettingsText:LocalizedStringKey = "menuSettingsText"
 let menuFurnitureText:LocalizedStringKey = "menuFurnitureText"
 let menuListingsText:LocalizedStringKey = "menuListingsText"
+let menuWeather:LocalizedStringKey = "menuWeather"
+
 
 
 struct Menu: View {
@@ -46,7 +48,7 @@ struct Menu: View {
             .padding(.top, 30)
             HStack {
                 NavigationLink(destination: FurnitureCollectionView()) {
-                    Image(systemName: "map")
+                    Image(systemName: "sofa.fill")
                         .foregroundColor(.gray)
                         .imageScale(.large)
                     Text(menuFurnitureText)
@@ -57,10 +59,21 @@ struct Menu: View {
             .padding(.top, 30)
             HStack {
                 NavigationLink(destination: ListingsView()) {
-                    Image(systemName: "map")
+                    Image(systemName: "list.bullet.clipboard.fill")
                         .foregroundColor(.gray)
                         .imageScale(.large)
                     Text(menuListingsText)
+                        .foregroundColor(.gray)
+                        .font(.headline)
+                }
+            }
+            .padding(.top, 30)
+            HStack {
+                NavigationLink(destination: WeatherView()) {
+                    Image(systemName: "cloud.sun.rain")
+                        .foregroundColor(.gray)
+                        .imageScale(.large)
+                    Text(menuWeather)
                         .foregroundColor(.gray)
                         .font(.headline)
                 }

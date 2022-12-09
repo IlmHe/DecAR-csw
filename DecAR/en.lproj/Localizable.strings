@@ -24,3 +24,12 @@
 "furnitureFurnitureName" = "Furniture name";
 "furnitureEnterFurnitureDetails" = "Enter furniture details.";
 "furnitureSelectItem" = "Select an item";
+"furniture3dModel" = "3D model: ";
+"furnitureCategory" = "Category: ";
+"furnitureFurnitureCategory" = "Furniture category";
+"furniture3DModel" = "3D model name";
+"mapNoName" = "No name";
+"mapTapped" = "Tapped on: ";
+"weatherSearch" = "Search";
+"weatherFetchJoke" = "Fetch joke";
+"menuWeather" = "Weather";

@@ -16,6 +16,11 @@ let furnitureEnterFurnitureDetails = NSLocalizedString("furnitureEnterFurnitureD
 let furnitureSelectItem = NSLocalizedString("furnitureSelectItem", comment: "furnitureSelectItem")
 let furnitureAddBtn = NSLocalizedString("listingsAddBtn", comment: "listingsAddBtn")
 let furnitureCancelBtn = NSLocalizedString("listingsBtnCancel", comment: "listingsAddBtn")
+let furniture3dModel = NSLocalizedString("furniture3dModel", comment: "furniture3dModel")
+let furnitureCategory = NSLocalizedString("furnitureCategory", comment: "furnitureCategory")
+let furnitureFurnitureCategory = NSLocalizedString("furnitureFurnitureCategory", comment: "furnitureFurnitureCategory")
+let furniture3DModel = NSLocalizedString("furniture3DModel", comment: "furniture3DModel")
+
 
 
 
@@ -40,8 +45,8 @@ struct FurnitureCollectionView: View {
                 ForEach(furnitures) { furniture in
                     NavigationLink {
                         Text("\(furnitureNameLoc) \(furniture.furnitureName!)")
-                        Text("3D model: \(furniture.modelName!)")
-                        Text("Category: \(furniture.category!)")
+                        Text("\(furniture3dModel) \(furniture.modelName!)")
+                        Text("\(furnitureCategory) \(furniture.category!)")
                     } label: {
                         Text(furniture.furnitureName!)
                     }
@@ -59,8 +64,8 @@ struct FurnitureCollectionView: View {
                         .popover(isPresented: self.$presentAlert, arrowEdge: .bottom) {
                         Text(furnitureAlertAddFurniture)
                         TextField(furnitureFurnitureName, text: $furnitureName)
-                        TextField("Furniture category", text: $category)
-                        TextField("3D model name", text: $modelName)
+                        TextField(furnitureFurnitureCategory, text: $category)
+                        TextField(furniture3DModel, text: $modelName)
 
                         Button(furnitureAddBtn, action: {
                             let newFurniture = Furniture(context: viewContext)
