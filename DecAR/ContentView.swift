@@ -109,7 +109,7 @@ struct ContentView : View {
                                     }
                                 }
                             }) {
-                                Image(systemName: "gear")
+                                Image(systemName: "questionmark.circle")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
@@ -434,19 +434,19 @@ struct ARViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
         
-        //arView.currentModelName = arView.makePeace()
+        arView.currentModelName = arView.makePeace()
 
-        //arView.setupConfiguration()
+        arView.setupConfiguration()
         
-        //arView.addCoaching()
+        arView.addCoaching()
         
-        //arView.enableObjectAdd()
+        arView.enableObjectAdd()
 
-        //arView.enableObjectRemoval()
+        arView.enableObjectRemoval()
       
-        //arView.enableWorldPersistance()
+        arView.enableWorldPersistance()
         
-        //arView.enableWorldLoad()
+        arView.enableWorldLoad()
         
         return arView
 
