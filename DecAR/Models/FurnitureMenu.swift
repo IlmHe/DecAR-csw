@@ -63,12 +63,13 @@ struct FurnitureMenu: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 32, height: 32)
+                .foregroundColor(Color(red: 49/255, green: 160/255, blue: 224/255))
             }
+            .foregroundColor(Color(red: 73/255, green: 167/255, blue: 221/255))
             .padding(.leading, 30)
             .padding(.top, 10)
+            .padding(.bottom, 10)
             
-            
-            Text("Furniture categories")
             NavigationView {
                 List {
                     ForEach(furnitureCategories) {category in
@@ -81,27 +82,33 @@ struct FurnitureMenu: View {
                                         
                                         let appFurniture = UserDefaults.standard
                                         appFurniture.set(furniture.modelName, forKey: "AppCurrentObject")
+                                        
                                         print("\(category.categoryName)")
                                         isPresented = false
                                     })
                                 }
-                            }
+                            }.foregroundColor(.black)
                         }
                         } label: {
                             FurnitureCategoriesRow(category: category)
                         }
                     }
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color(red: 234/255, green: 237/255, blue: 239/255))
+                    .padding(8)
                 }
+                .foregroundColor(.black)
             }
             Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
        // .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(red: 64/255, green: 208/255, blue: 236/255))
+        .background(Color(red: 234/255, green: 237/255, blue: 239/255))
         //.listStyle(.automatic)
         .listStyle(.sidebar)
         .edgesIgnoringSafeArea(.all)
     }
+
 }
 
 /*

@@ -15,17 +15,20 @@ let menuWeather:LocalizedStringKey = "menuWeather"
 
 
 
+
 struct Menu: View {
     var body: some View {
+        
+        
         VStack(alignment: .leading) {
             HStack {
 
               NavigationLink(destination: MapView()) {
                     Image(systemName: "map")
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
                         .imageScale(.large)
                     Text(menuMapText)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
                         .font(.headline)
                         .accessibilityLabel(menuMapText)
                 }
@@ -34,11 +37,11 @@ struct Menu: View {
             HStack {
 
                 NavigationLink(destination: Settings()) {
-                    Image(systemName: "gear")
-                        .foregroundColor(.gray)
+                    Image(systemName: "questionmark.circle")
+                        .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
                         .imageScale(.large)
                     Text(menuSettingsText)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
                         .font(.headline)
                         .accessibilityLabel(menuSettingsText)
                 }
@@ -47,10 +50,10 @@ struct Menu: View {
             HStack {
                 NavigationLink(destination: FurnitureCollectionView()) {
                     Image(systemName: "sofa.fill")
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
                         .imageScale(.large)
                     Text(menuFurnitureText)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
                         .font(.headline)
                         .accessibilityLabel(menuFurnitureText)
                 }
@@ -59,10 +62,10 @@ struct Menu: View {
             HStack {
                 NavigationLink(destination: ListingsView()) {
                     Image(systemName: "list.bullet.clipboard.fill")
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
                         .imageScale(.large)
                     Text(menuListingsText)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
                         .font(.headline)
                         .accessibilityLabel(menuListingsText)
                 }
@@ -71,20 +74,20 @@ struct Menu: View {
             HStack {
                 NavigationLink(destination: WeatherView()) {
                     Image(systemName: "cloud.sun.rain")
-                        .foregroundColor(.gray)
+                        .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
                         .imageScale(.large)
                     Text(menuWeather)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
                         .font(.headline)
                         .accessibilityLabel(menuWeather)
                 }
             }
             .padding(.top, 30)
-            Spacer()
+           Spacer()
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(red: 64/255, green: 208/255, blue: 236/255).opacity(0.1))
+        .background(Color(red: 73/255, green: 167/255, blue: 221/255).opacity(0.1))
         .listStyle(.sidebar)
         .edgesIgnoringSafeArea(.all)
     }
