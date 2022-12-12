@@ -11,11 +11,6 @@ import RealityKit
 import ARKit
 import SceneKit
 
-let menuLabel = NSLocalizedString("menuLabel", comment: "menuLabel")
-let settingsLabel = NSLocalizedString("settingsLabel", comment: "settingsLabel")
-let furnituremenuLabel = NSLocalizedString("furnitureMenuLabel", comment: "furnitureMenuLabel")
-
-
 
 struct ContentView : View {
     @State var showMenu = false
@@ -52,7 +47,7 @@ struct ContentView : View {
                                     .edgesIgnoringSafeArea(.all)
                                 
                                 if self.showMenu {
-                                    Menu() 
+                                    Menu()
                                         .frame(width: geometry.size.width/2)
                                         .transition(.move(edge: .leading))
                                 }
@@ -90,24 +85,31 @@ struct ContentView : View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
-                                .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
-                                .accessibilityLabel(menuLabel)
                             }
                         }
 
                     }
 
                     ToolbarItemGroup(placement: .navigationBarTrailing){
-                      HStack {
-                        NavigationLink(destination: InstructionsView()) {
-                          Image(systemName: "questionmark.circle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 32, height: 32)
-                            .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
-                            .accessibilityLabel(settingsLabel)
+                        if !self.showFurMenu {
+                            Button(action: {
+                                if !self.showSettings {
+                                    withAnimation{
+                                        self.showSettings = true
+                                    }
+                                } else {
+                                    withAnimation{
+                                        self.showSettings = false
+                                    }
+                                }
+                            }) {
+                                Image(systemName: "gear")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 32, height: 32)
+                            }
                         }
-                      }
+                        
                     }
                     
                     ToolbarItemGroup(placement: .bottomBar) {
@@ -122,9 +124,6 @@ struct ContentView : View {
                                 .sheet(isPresented: $showingDetail) {
                                     FurnitureMenu(isPresented: $showingDetail)
                                 }
-                                .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
-                                .accessibilityLabel(furnituremenuLabel)
-
                             }
                         }
                            
@@ -426,19 +425,19 @@ struct ARViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> ARView {
         let arView = ARView(frame: .zero)
         
-        //arView.currentModelName = arView.makePeace()
+        arView.currentModelName = arView.makePeace()
 
-        //arView.setupConfiguration()
+        arView.setupConfiguration()
         
-        //arView.addCoaching()
+        arView.addCoaching()
         
-        //arView.enableObjectAdd()
+        arView.enableObjectAdd()
 
-        //arView.enableObjectRemoval()
+        arView.enableObjectRemoval()
       
-        //arView.enableWorldPersistance()
+        arView.enableWorldPersistance()
         
-        //arView.enableWorldLoad()
+        arView.enableWorldLoad()
         
         return arView
 

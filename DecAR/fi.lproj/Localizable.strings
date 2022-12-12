@@ -6,7 +6,7 @@
   
 */
 "menuMapText" = "Kartta";
-"menuSettingsText" = "Apua";
+"menuSettingsText" = "Asetukset";
 "menuFurnitureText" = "Huonekalut";
 "menuListingsText" = "Listaukset";
 "settingsLang" = "English 🇬🇧";
@@ -24,32 +24,3 @@
 "furnitureFurnitureName" = "Huonekalun nimi";
 "furnitureEnterFurnitureDetails" = "Lisää huonekalun tiedot";
 "furnitureSelectItem" = "Valitse kohde";
-"furniture3dModel" = "3D malli: ";
-"furnitureCategory" = "Kategoria: ";
-"furnitureFurnitureCategory" = "Huonekalu kategoria";
-"furniture3DModel" = "3D mallin nimi";
-"mapNoName" = "Ei nimeä";
-"mapTapped" = "Napautettu: ";
-"weatherSearch" = "Hae";
-"weatherFetchJoke" = "Hae vitsi";
-"menuWeather" = "Sää";
-"menuLabel" = "Valikko";
-"settingsLabel" = "Asetukset";
-"furnitureMenuLabel" = "Huonekaluvalikko";
-"weatherLanguage" = "fi";
-"currentWeather" = "Nykyinen sää";
-"Temperature" = "Asteet";
-"feelsLike" = "Tuntuu: ";
-"Humidity" = "Kosteus: ";
-"windSpeed" = "Ilman nopeus: ";
-"Description" = "Kuvaus: ";
-"Main" = "Pää";
-
-// Instructions.
-"Sections" = "Nämä ohjeet ovat jaoteltu eri osiin:\n1. Yhteenveto\n2. VR Näkymä\n3. Huonekalu Näkymä\n4. Kartta\n5. Listaukset\n6. Sää Näkymä";
-"Section1" = "Osa 1: Yhteenveto\nSovelluksen käynnistyessä löydät itsesi DecAR:in VR näkymästä missä voit asetella huonekaluja ympäri huonetta. Pääset sovelluksen käyttöohjeisiin täppäämällä kysymysmerkki ikonia ruudun oikeasta ylänurkasta VR näkymässä. Vasemmasta ylänurkasta löydät ikonin joka avaa navigaatio valikon mistä pääset kulkemaan ympäri DecAR sovellusta.";
-"Section2" = "Osa 2: VR Näkymä\nVR näkymässä voit valita eri huonekaluja huoneeseen täppäämällä isoa plus nappulaa. Kun olet valinnut tietyn huonekalun ja asettanut sen haluamaasi paikkaan, voit asettaa sen paikalleen täppäämällä kerran ruutua. Jos painat ruudusta muutaman sekunnin ajan valitsemasi huonekalu poistuu näkymästä. Tekemällä ympyräliikkeen kahdella sormella tallennat huonekalujen paikat sovellukseen. Täppäämällä ruutua kahdella sormella lataat tallennetun huonekalu asettelun.";
-"Section3" = "Osa 3: Huonekalu Näkymä\nMenemällä huonekalunäkymään valikon kautta, voit lisätä, muokata tai poistaa huonekaluja sovelluksesta.";
-"Section4" = "Osa 4: Kartta\nDecAR:in karttanäkymässä näet kaikki listaukset kartalla.";
-"Section5" = "Osa 5: Listaukset Lista\nListaukset listassa pääset lisäämään, muokkaamaan ja poistamaan listauksia. HUOM! Lisää osoite listaukseen muodossa 'Osoite, Maakunta', jotta listaus näkyy kartalla.";
-"Section6" = "Osa 6: Sää Näkymä\nSää näkymässä pystyt hakemaan listauksen ympärillä olevan sään hakemalla kaupungin perusteella jossa seuraava listaus on.";

@@ -12,7 +12,6 @@ import CoreData
 @main
 
 
-
 struct DecARCoreDataApp: App {
     let persistenceController = PersistenceController.shared
     init() {
@@ -76,7 +75,7 @@ struct DecARCoreDataApp: App {
             let baseFurniture11 = Furniture(context: furnitureContext)
             baseFurniture11.furnitureName = "Striped carpet"
             baseFurniture11.modelName = "striped_carpet"
-            baseFurniture11.category = "Carpets"
+            baseFurniture11.category = "Carpet"
 
             let baseFurniture12 = Furniture(context: furnitureContext)
             baseFurniture12.furnitureName = "Vase"
@@ -96,7 +95,7 @@ struct DecARCoreDataApp: App {
             let baseFurniture30 = Furniture(context: furnitureContext)
             baseFurniture30.furnitureName = "Modern TV stand"
             baseFurniture30.modelName = "modern_tv_stand"
-            baseFurniture30.category = "Stands"
+            baseFurniture30.category = "TV stands"
             
             let baseFurniture34 = Furniture(context: furnitureContext)
             baseFurniture34.furnitureName = "Table set"
@@ -111,7 +110,7 @@ struct DecARCoreDataApp: App {
             let baseFurniture36 = Furniture(context: furnitureContext)
             baseFurniture36.furnitureName = "Art desk"
             baseFurniture36.modelName = "art_desk"
-            baseFurniture36.category = "Desks"
+            baseFurniture36.category = "Deks"
             
             let baseFurniture37 = Furniture(context: furnitureContext)
             baseFurniture37.furnitureName = "Wooden table"
@@ -131,7 +130,7 @@ struct DecARCoreDataApp: App {
             let baseFurniture41 = Furniture(context: furnitureContext)
             baseFurniture41.furnitureName = "Divan sofa"
             baseFurniture41.modelName = "divan_sofa"
-            baseFurniture41.category = "Couches"
+            baseFurniture41.category = "Sofas"
             
             let baseFurniture43 = Furniture(context: furnitureContext)
             baseFurniture43.furnitureName = "Wooden bed"
@@ -151,7 +150,7 @@ struct DecARCoreDataApp: App {
             let baseFurniture47 = Furniture(context: furnitureContext)
             baseFurniture47.furnitureName = "Grey sofa"
             baseFurniture47.modelName = "grey_sofa"
-            baseFurniture47.category = "Couches"
+            baseFurniture47.category = "Sofas"
             
             let baseFurniture48 = Furniture(context: furnitureContext)
             baseFurniture48.furnitureName = "Armchair"
@@ -161,7 +160,7 @@ struct DecARCoreDataApp: App {
             let baseFurniture49 = Furniture(context: furnitureContext)
             baseFurniture49.furnitureName = "Chesterfield sofa"
             baseFurniture49.modelName = "chesterfield_sofa"
-            baseFurniture49.category = "Couches"
+            baseFurniture49.category = "Sofas"
             
             let context = persistentContainer.viewContext
             if context.hasChanges {
