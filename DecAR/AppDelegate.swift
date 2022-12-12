@@ -43,7 +43,7 @@ struct DecARCoreDataApp: App {
             redChair.category = "Chairs"
             
             let couch = Furniture(context: furnitureContext)
-            couch.furnitureName = "Brown cuch"
+            couch.furnitureName = "Brown couch"
             couch.modelName = "brown_couch"
             couch.category = "Couches"
             
