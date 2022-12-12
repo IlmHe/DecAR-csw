@@ -36,7 +36,7 @@ struct Menu: View {
             .padding(.top, 100)
             HStack {
 
-                NavigationLink(destination: Settings()) {
+                NavigationLink(destination: InstructionsView()) {
                     Image(systemName: "questionmark.circle")
                         .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
                         .imageScale(.large)
