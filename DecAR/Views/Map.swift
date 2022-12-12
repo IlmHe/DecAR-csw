@@ -11,6 +11,8 @@ import Foundation
 import CoreLocation
 import Combine
 
+let mapTapped = NSLocalizedString("mapTapped", comment: "mapTapped")
+
 // TODO: Set the users current location as the initial location.
 // TODO: Function which draws route to chosen annotation.
 // TODO: Info bubbles for annotations when tapped.
@@ -87,8 +89,9 @@ struct MapView: View {
         content: {
           Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
           Text(location.name)
+            .accessibilityLabel(mapTapped)
           onTapGesture {
-            print("Tapped on: \(String(describing: location.name))")
+            print("\(mapTapped) \(String(describing: location.name))")
           }
         }
       )
