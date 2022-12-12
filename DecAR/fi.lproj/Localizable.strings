@@ -47,7 +47,7 @@
 
 // Instructions.
 "Sections" = "Nämä ohjeet ovat jaoteltu eri osiin:\n1. Yhteenveto\n2. VR Näkymä\n3. Huonekalu Näkymä\n4. Kartta\n5. Listaukset\n6. Sää Näkymä";
-"Section1" = "Osa 1: Yhteenveto\nSovelluksen käynnistyessä löydät itsesi DecAR:in VR näkymästä missä voit asetella huonekaluja ympäri huonetta. Voit vaihtaa sovelluksen kieltä täppäämällä ikonia ruudun oikeasta ylänurkasta VR näkymässä. Vasemmasta ylänurkasta löydät ikonin joka avaa navigaatio valikon mistä pääset kulkemaan ympäri DecAR sovellusta.";
+"Section1" = "Osa 1: Yhteenveto\nSovelluksen käynnistyessä löydät itsesi DecAR:in VR näkymästä missä voit asetella huonekaluja ympäri huonetta. Pääset sovelluksen käyttöohjeisiin täppäämällä kysymysmerkki ikonia ruudun oikeasta ylänurkasta VR näkymässä. Vasemmasta ylänurkasta löydät ikonin joka avaa navigaatio valikon mistä pääset kulkemaan ympäri DecAR sovellusta.";
 "Section2" = "Osa 2: VR Näkymä\nVR näkymässä voit valita eri huonekaluja huoneeseen täppäämällä isoa plus nappulaa. Kun olet valinnut tietyn huonekalun ja asettanut sen haluamaasi paikkaan, voit asettaa sen paikalleen täppäämällä kerran ruutua. Jos painat ruudusta muutaman sekunnin ajan valitsemasi huonekalu poistuu näkymästä. Tekemällä ympyräliikkeen kahdella sormella tallennat huonekalujen paikat sovellukseen. Täppäämällä ruutua kahdella sormella lataat tallennetun huonekalu asettelun.";
 "Section3" = "Osa 3: Huonekalu Näkymä\nMenemällä huonekalunäkymään valikon kautta, voit lisätä, muokata tai poistaa huonekaluja sovelluksesta.";
 "Section4" = "Osa 4: Kartta\nDecAR:in karttanäkymässä näet kaikki listaukset kartalla.";

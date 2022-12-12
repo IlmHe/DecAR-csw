@@ -13,9 +13,6 @@ let menuFurnitureText:LocalizedStringKey = "menuFurnitureText"
 let menuListingsText:LocalizedStringKey = "menuListingsText"
 let menuWeather:LocalizedStringKey = "menuWeather"
 
-
-
-
 struct Menu: View {
     var body: some View {
         

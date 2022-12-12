@@ -98,27 +98,16 @@ struct ContentView : View {
                     }
 
                     ToolbarItemGroup(placement: .navigationBarTrailing){
-                        if !self.showFurMenu {
-                            Button(action: {
-                                if !self.showSettings {
-                                    withAnimation{
-                                        self.showSettings = true
-                                    }
-                                } else {
-                                    withAnimation{
-                                        self.showSettings = false
-                                    }
-                                }
-                            }) {
-                                Image(systemName: "questionmark.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 32, height: 32)
-                                .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
-                                .accessibilityLabel(settingsLabel)
-                            }
+                      HStack {
+                        NavigationLink(destination: InstructionsView()) {
+                          Image(systemName: "questionmark.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                            .foregroundColor(Color(red: 102/255, green: 198/255, blue: 255/255))
+                            .accessibilityLabel(settingsLabel)
                         }
-                        
+                      }
                     }
                     
                     ToolbarItemGroup(placement: .bottomBar) {
