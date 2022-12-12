@@ -427,6 +427,7 @@ struct ARViewContainer: UIViewRepresentable {
         
         arView.currentModelName = arView.makePeace()
 
+        
         arView.setupConfiguration()
         
         arView.addCoaching()
