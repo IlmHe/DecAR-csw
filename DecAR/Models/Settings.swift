@@ -20,7 +20,7 @@ struct Settings: View {
                             Toggle(settingsLang, isOn: $isOn)//.padding(80)
                         //Spacer()
                         if isOn {
-                            //Text("testing")
+                            Text("testing")
                         }
                     }
                         

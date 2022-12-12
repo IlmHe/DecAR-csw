@@ -6,7 +6,7 @@
   
 */
 "menuMapText" = "Map";
-"menuSettingsText" = "Help";
+"menuSettingsText" = "Settings";
 "menuFurnitureText" = "Furniture Menu";
 "menuListingsText" = "Listings";
 "settingsLang" = "Finnish 🇫🇮";
@@ -24,32 +24,3 @@
 "furnitureFurnitureName" = "Furniture name";
 "furnitureEnterFurnitureDetails" = "Enter furniture details.";
 "furnitureSelectItem" = "Select an item";
-"furniture3dModel" = "3D model: ";
-"furnitureCategory" = "Category: ";
-"furnitureFurnitureCategory" = "Furniture category";
-"furniture3DModel" = "3D model name";
-"mapNoName" = "No name";
-"mapTapped" = "Tapped on: ";
-"weatherSearch" = "Search";
-"weatherFetchJoke" = "Fetch joke";
-"menuWeather" = "Weather";
-"menuLabel" = "Menu";
-"settingsLabel" = "Settings";
-"furnitureMenuLabel" = "Furniture menu";
-"weatherLanguage" = "en";
-"currentWeather" = "Current weather";
-"Temperature" = "Temperature";
-"feelsLike" = "Feels like: ";
-"Humidity" = "Humidity: ";
-"windSpeed" = "Wind speed: ";
-"Description" = "Description: ";
-"Main" = "Main";
-
-// Instructions.
-"Sections" = "These instructions are seperated to different sections:\n1. Summary\n2. VR View\n3. Furniture View\n4. Map\n5. Listings List\n6. Weather View";
-"Section1" = "Section 1: Summary\nYou start up in our VR view where you can place the furniture around. You can see the DecAR's user instructions from top right of the VR screen. In the top left corner you can open up our navigation menu which you can use to move between the DecAR's views.";
-"Section2" = "Section 2: VR View\nIn VR view you can choose and place different pieces of furniture by pressing the plus button. When you have chosen piece of furniture you can place it by tapping the screen. You tap the screen for couple of seconds the chosen furniture will be deleted from the screen. By doing a circle motion with two fingers DecAR will save and by tapping the screen with two fingers DecAR will load.";
-"Section3" = "Section 3: Furniture View\nBy hopping to furniture view from the navigation menu, you can add, edit as well as delete different pieces of furniture in DecAR.";
-"Section4" = "Section 4: Map\nIn DecAR's map screen you'll see all of the listings on the map.";
-"Section5" = "Section 5: Listings List\nIn listings list which you can get to from the menu you can add, edit and delete listings.\n IMPORTANT NOTE! Add the address to a listing in this form to show up correctly on the map:\n 'Address, Name of the province'.";
-"Section6" = "Section 6: Weather view\nYou can use our weather view to check the type of weather around the listing area by searching the name of the city where the next listing is located.";
