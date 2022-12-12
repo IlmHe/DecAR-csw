@@ -59,7 +59,7 @@ struct FurnitureMenu: View {
             Button(action: {
                 isPresented = false
             }) {
-                Image(systemName: "arrow.backward")
+                Image(systemName: "chevron.left")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 32, height: 32)
@@ -85,13 +85,16 @@ struct FurnitureMenu: View {
                                         
                                         print("\(category.categoryName)")
                                         isPresented = false
-                                    })
+                                    }).listRowSeparator(.hidden)
+                                        .listRowBackground(Color(red: 234/255, green: 237/255, blue: 239/255))
+                                        .padding(8)
                                 }
                             }.foregroundColor(.black)
                         }
                         } label: {
                             FurnitureCategoriesRow(category: category)
                         }
+
                     }
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color(red: 234/255, green: 237/255, blue: 239/255))
@@ -103,7 +106,7 @@ struct FurnitureMenu: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
        // .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color(red: 234/255, green: 237/255, blue: 239/255))
+        .background(Color(red: 242/255, green: 242/255, blue: 247/255))
         //.listStyle(.automatic)
         .listStyle(.sidebar)
         .edgesIgnoringSafeArea(.all)
