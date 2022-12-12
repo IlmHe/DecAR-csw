@@ -36,13 +36,20 @@ struct ListingsView: View {
             List {
                 ForEach(listings) { listing in
                     NavigationLink {
-                        Text("\(listingsClientName) \(listing.clientName!)")
-                        Text("\(listingsClientAddress) \(listing.clientAddress!)")
+                        Group {
+                            Text("\(listing.clientName!)")
+                            Text("\(listing.clientAddress!)")
+                        }.lineSpacing(10).font(.system(size: 20, weight: .semibold, design: .rounded)).padding(10).overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color(red: 49/255, green: 160/255, blue: 224/255), lineWidth: 1))
                     } label: {
                         Text(listing.clientName!)
                     }
                 }
                 .onDelete(perform: deleteItems)
+                .listRowSeparator(.hidden)
+                .listRowBackground(Color(red: 234/255, green: 237/255, blue: 239/255))
+                .padding(8)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
