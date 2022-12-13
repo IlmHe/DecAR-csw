@@ -71,9 +71,6 @@ struct MapView: View {
   // Holds all of the listing objects.
   private var listings: FetchedResults<Listing>
   
-  // Sets initial location and zoom distance.
-  @State private var mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 60.16952, longitude: 24.93545), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-    
   var body: some View {
     // Map which shows all of the listings locations as pins.
     Map(
@@ -88,7 +85,6 @@ struct MapView: View {
           Image(systemName: "pin.circle.fill").foregroundColor(.cyan)
           Text(location.name)
           onTapGesture {
-            print("Tapped on: \(String(describing: location.name))")
           }
         }
       )
@@ -100,10 +96,12 @@ struct MapView: View {
      * Returns the list of locations to Map function.
     */
     .onAppear {
+      /* Probably TRASH
       self.mapRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(/* current coords */),
         span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-      
+      */
+       
       for address in listings {
         self.getCoordinate(addressString: address.clientAddress ?? "22 Sunset Ave, East Quogue, NY", completionHandler: { (coordinates, error) in
           let newObject = ListingObject(
@@ -140,9 +138,11 @@ struct MapView: View {
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
   let manager = CLLocationManager()
-  @Published var location: CLLocationCoordinate2D?
+  //@Published var location: CLLocationCoordinate2D?
   @Published var region = MKCoordinateRegion()
-
+  @Published var currentCoords: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+  @State var didFetchRegion: Bool = false
+  
   override init() {
     super.init()
     manager.delegate = self
@@ -157,11 +157,26 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     //location = locations.first?.coordinate
-    locations.last.map {
-      region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude),
-        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
-      )
+    if didFetchRegion == false {
+      locations.last.map {
+        region = MKCoordinateRegion(
+          center: CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude),
+          span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+        )
+        
+        didFetchRegion = true
+        
+        currentCoords = CLLocationCoordinate2D(
+          latitude: $0.coordinate.latitude,
+          longitude: $0.coordinate.longitude
+        )
+        
+        /*
+         MapView(currentCoord: CLLocationCoordinate2D(
+         latitude: $0.coordinate.latitude,
+         longitude: $0.coordinate.longitude))
+         */
+      }
     }
   }
 }
