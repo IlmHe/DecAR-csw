@@ -11,12 +11,6 @@ import Foundation
 import CoreLocation
 import Combine
 
-// TODO: Set the users current location as the initial location.
-// TODO: Function which draws route to chosen annotation.
-// TODO: Info bubbles for annotations when tapped.
-// TODO: Button inside the info bubble to draw the route.
-// TODO: UI changes for each team.
-
 /**
  * ListingObject class
  * ListingObject can be given the values of a listing with added value coordinates.
@@ -96,12 +90,6 @@ struct MapView: View {
      * Returns the list of locations to Map function.
     */
     .onAppear {
-      /* Probably TRASH
-      self.mapRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(/* current coords */),
-        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
-      */
-       
       for address in listings {
         self.getCoordinate(addressString: address.clientAddress ?? "22 Sunset Ave, East Quogue, NY", completionHandler: { (coordinates, error) in
           let newObject = ListingObject(
@@ -137,46 +125,48 @@ struct MapView: View {
 }
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-  let manager = CLLocationManager()
-  //@Published var location: CLLocationCoordinate2D?
+  private let manager = CLLocationManager()
   @Published var region = MKCoordinateRegion()
-  @Published var currentCoords: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
-  @State var didFetchRegion: Bool = false
+  @Published var location: CLLocation?
+  private var hasSetRegion = false
   
   override init() {
     super.init()
-    manager.delegate = self
-    manager.desiredAccuracy = kCLLocationAccuracyBest
-    manager.requestWhenInUseAuthorization()
-    manager.startUpdatingLocation()
+    self.manager.delegate = self
+    self.manager.desiredAccuracy = kCLLocationAccuracyBest
+    self.manager.distanceFilter = kCLDistanceFilterNone
+    self.manager.requestWhenInUseAuthorization()
+    self.manager.startUpdatingLocation()
   }
 
   func requestLocation() {
     manager.requestLocation()
   }
-
+  /*
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    //location = locations.first?.coordinate
-    if didFetchRegion == false {
-      locations.last.map {
-        region = MKCoordinateRegion(
-          center: CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude),
-          span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
-        )
-        
-        didFetchRegion = true
-        
-        currentCoords = CLLocationCoordinate2D(
-          latitude: $0.coordinate.latitude,
-          longitude: $0.coordinate.longitude
-        )
-        
-        /*
-         MapView(currentCoord: CLLocationCoordinate2D(
-         latitude: $0.coordinate.latitude,
-         longitude: $0.coordinate.longitude))
-         */
+    locations.last.map {
+      region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude),
+        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+      )
+   */
+      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+        self.location = location
+          if !hasSetRegion {
+            self.region = MKCoordinateRegion(
+              center: location.coordinate,
+              span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3))
+            
+            hasSetRegion = true
+          }
+        }
       }
-    }
-  }
+      
+      /*currentCoords = CLLocationCoordinate2D(
+        latitude: $0.coordinate.latitude,
+        longitude: $0.coordinate.longitude
+      )*/
+    //}
+  //}
 }
