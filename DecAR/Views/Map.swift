@@ -34,8 +34,10 @@ import Combine
  * getCoordinate() function geocodes given address string to coordinates of type CLLocationCoordinate2D and passes them to completionHandler which returns the coordinates asynchronously as well as error message which can be nil.
  * The function itself returns Void because it isn't asynchronous.
  *
- *
  * Note: To use completionHandler, you must give it the to be return value inside a function which returns Void. Then you call the function somewhere, give it some value and catch the return value as well as the error message from the completionHandler inside the function call.
+ *
+ * LocationManager class
+ * LocationManager class fetches the user's current location and returns it for Map() inside the body function.
  */
 
 // Used to hold listing data.
@@ -124,6 +126,10 @@ struct MapView: View {
   }
 }
 
+/*
+ * Fetches user's current location and returns it to Map() to set the initial region to it.
+ * Also checks if the class has already given a current region. If the region has already been given a location will not be updated so that the location on map is not locked to the current location and it can be dragged and zoomed.
+ */
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
   private let manager = CLLocationManager()
   @Published var region = MKCoordinateRegion()
@@ -142,31 +148,17 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
   func requestLocation() {
     manager.requestLocation()
   }
-  /*
+
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    locations.last.map {
-      region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: $0.coordinate.latitude, longitude: $0.coordinate.longitude),
-        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
-      )
-   */
-      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-        self.location = location
-          if !hasSetRegion {
-            self.region = MKCoordinateRegion(
-              center: location.coordinate,
-              span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3))
-            
-            hasSetRegion = true
-          }
-        }
+    if let location = locations.last {
+    self.location = location
+      if !hasSetRegion {
+        self.region = MKCoordinateRegion(
+          center: location.coordinate,
+          span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3))
+        
+        hasSetRegion = true
       }
-      
-      /*currentCoords = CLLocationCoordinate2D(
-        latitude: $0.coordinate.latitude,
-        longitude: $0.coordinate.longitude
-      )*/
-    //}
-  //}
+    }
+  }
 }
